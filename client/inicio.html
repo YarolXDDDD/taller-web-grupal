@@ -895,6 +895,7 @@
                         break;
                     case 'playerJoined':{
                         console.log('HOLA!: '+mensaje.name+'te has unido a un juego exitosamente');
+                        localStorage.setItem('partidaActiva', mensaje.gameId);
                         alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'),mensaje.gamePlayers);
                         cargarNuevaSeccion('container-lobby','container-tablero-barcos',localStorage.getItem('cantidadJugadores')); 
                     }
