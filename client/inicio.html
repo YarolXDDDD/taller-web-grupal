@@ -149,7 +149,7 @@
     <div class="main-container" id="container-juego">
         <header>
             <div id="modo-juego"><h1>Modo</h1></div>
-            <h2 id="encabezado-enemigo"> Tus enemigos son Enemigo1, Enemigo2, Enemigo3</h2>
+            <h2 id="encabezado-enemigo"> Tus enemigos son:</h2>
             <div id="anuncio"><h3>anuncio</h3></div>
         </header>
         <main>
@@ -886,7 +886,6 @@
                 console.log(mensaje);
                 switch (mensaje.type){
                     case 'gameCreated':{
-                        console.log(mensaje.players[0].name);
                         localStorage.setItem('partidaActiva',mensaje.gameId);
                         const gamePlayers = mensaje.players.map(player => player.name);
                         alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'),gamePlayers);

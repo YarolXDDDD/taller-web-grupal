@@ -17,7 +17,7 @@ wss.on("connection", function connection(ws) {
     ws.on('close', () => {
         handleDisconnect(ws);
     });
-    console.log("jaja ahora jugaras batalla naval");
+    console.log("ahora jugaras batalla naval");
 });
 
 /**
