@@ -174,8 +174,9 @@ function handleStartGame(ws, gameId,cantidadJugadores) {
     //     return;
     // }
     game.started = true;
+    const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
-            sendMessage(player.ws, { type: 'gameStarted', gameId });
+            sendMessage(player.ws, { type: 'gameStarted', gameId, gamePlayers: gamePlayers });
     });
 }
 

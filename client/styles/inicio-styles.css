@@ -18,12 +18,12 @@
 
 #titulo-principal {
     font-family: 'Jaro', sans-serif;
-    font-size: 50px;
+    font-size: 40px;
     background-color: white;
     width: 100%;
-    margin:0;
+    margin: 0;
     text-align: center;
-    color: #1449DB;
+    color: #1449db;
 }
 
 form {
@@ -61,11 +61,12 @@ form {
 
 section{
     background-color: #F7F7F7;
-    width: 750px;
+    width: auto;
+    padding: 50px;
     text-align: center;
     overflow: hidden;
     box-shadow: 0px 0px 50px #0009;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 header{
@@ -135,4 +136,16 @@ main {
     justify-content: center;
     gap: 3rem;
     margin:2rem;
+}
+
+#preparacion {
+    width: auto;
+}
+
+#jugar-section {
+    width: 500px;
+}
+
+#datos-del-jugador-frm-nombre {
+    width: 200px;
 }

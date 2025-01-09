@@ -808,8 +808,6 @@
     
         let confirmacionNombre= false;
 
-        
-
         cantidadJug2.addEventListener ('click', function(event){
             if (!confirmacionNombre)
             {
@@ -875,7 +873,7 @@
         })
 
         ws.addEventListener('open', ()=>{
-            console.log('Conectado al servidor');
+            console.log('Conectado al servidor ' + ws);
         })
 
         ws.addEventListener('close', ()=>{
@@ -902,7 +900,7 @@
                         break;
                     case 'gameStarted':{
                         console.log('se ha iniciado el juego');
-                        cargarNuevaSeccion('container-juego','container-lobby',localStorage.getItem('cantidadJugadores'));
+                        cargarNuevaSeccion('container-juego','container-lobby',localStorage.getItem('cantidadJugadores'),mensaje.gamePlayers);
                     } 
                         break;
                     case 'error':{
@@ -946,10 +944,11 @@
             ws.send(JSON.stringify({type:'create', playerName: localStorage.getItem('nombreJugador')}))
         })
 
-        document.getElementById('union-game').addEventListener('click',()=>{
+        // document.getElementById('union-game').addEventListener('click',()=>{
 
-            ws.send(JSON.stringify({type:'join', playerName: localStorage.getItem('nombreJugador'), gameID:'124', cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
-        })
+        //    
+        // })
+        
         document.getElementById('listo').addEventListener('click',()=>{
 
         ws.send(JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva')}))
@@ -967,6 +966,22 @@
             ws.send(JSON.stringify ({type:'leave-lobby', gameId: localStorage.getItem('partidaActiva'), playerName:localStorage.getItem('nombreJugador')}));
             cargarNuevaSeccion('container-inicio','container-lobby');
         })
+
+        document.getElementById('union-game').addEventListener('click', function () {
+            let idJuego = prompt("Por favor, ingresa el ID del juego:");
+            if (idJuego === null) {
+                console.log("Cancelado.");
+                return;
+            }
+            if (idJuego.trim() === "") {
+                alert("El ID del juego no puede estar vacío.");
+                return;
+            }
+
+            console.log("ID del juego ingresado:", idJuego);
+
+            ws.send(JSON.stringify({type:'join', playerName: localStorage.getItem('nombreJugador'), gameID:idJuego, cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
+        });
         
     </script>
 </body>
