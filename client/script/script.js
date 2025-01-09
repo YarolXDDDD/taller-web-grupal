@@ -459,6 +459,10 @@ function alterarLobby(cantidadJugadores, gameId,nombresJugadores){
     restantes.innerText='('+faltantes+') restantes';
     else
     restantes.innerText='Lobby completa, el primer jugador de la lista puede iniciar la partida';
+    if (localStorage.getItem('nombreJugador')!=nombresJugadores[0])
+        document.getElementById('listo').style.display= 'none';
+    else
+        document.getElementById('listo').style.display= 'block';
 }
 
 function ocultarSeccion(id) {

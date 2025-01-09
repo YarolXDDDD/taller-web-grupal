@@ -945,15 +945,7 @@
             ws.send(JSON.stringify({type:'create', playerName: localStorage.getItem('nombreJugador')}))
         })
 
-        // document.getElementById('union-game').addEventListener('click',()=>{
-
-        //    
-        // })
-        
         document.getElementById('listo').addEventListener('click',()=>{
-            console.log ('se oprimio el boton');
-            const mensaje= JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva'), cantidadJugadores:localStorage.getItem('cantidadJugadores')});
-            console.log(mensaje);
             ws.send(JSON.stringify({
                 type:'start', 
                 gameId: localStorage.getItem('partidaActiva'),
