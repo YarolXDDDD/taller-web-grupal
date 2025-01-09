@@ -68,7 +68,7 @@ function handleMessage(ws, message) {
         case 'start':
             // Para manejar el inicio de un juego, se necesita la conexión WebSocket del jugador y el ID del juego a
             // iniciar.
-            handleStartGame(ws, message.gameId,mensaje.cantidadJugadores);
+            handleStartGame(ws, message.gameId,message.cantidadJugadores);
             break;
         case 'move':
             // Para manejar los movimientos de los jugadores, se necesita la conexión WebSocket del jugador, el ID del
@@ -147,10 +147,10 @@ function handleJoinGame(ws, gameId,playerName, cantidadJugadores) {
         sendMessage(ws, { type: 'error', message: 'El juego no ha sido encontrado' });
         return;
     }
-    if (game.players.length >= cantidadJugadores) {
-        sendMessage(ws, { type: 'error', message: 'El juego esta lleno' });
-        return;
-    }
+    // if (game.players.length >= cantidadJugadores) {
+    //     sendMessage(ws, { type: 'error', message: 'El juego esta lleno' });
+    //     return;
+    // }
     game.players.push({ws,name:playerName});
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {

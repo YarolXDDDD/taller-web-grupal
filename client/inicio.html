@@ -952,7 +952,12 @@
         
         document.getElementById('listo').addEventListener('click',()=>{
             console.log ('se oprimio el boton');
-            ws.send(JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva'), cantidadJugadores:localStorage.getItem('cantidadJugadores')}));
+            const mensaje= JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva'), cantidadJugadores:localStorage.getItem('cantidadJugadores')});
+            console.log(mensaje);
+            ws.send(JSON.stringify({
+                type:'start', 
+                gameId: localStorage.getItem('partidaActiva'),
+                cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
         })
         document.getElementById('boton-volver').addEventListener('click',function (event){
             cargarNuevaSeccion('container-inicio','container-tablero-barcos');
