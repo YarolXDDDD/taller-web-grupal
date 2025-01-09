@@ -149,6 +149,10 @@ function handleJoinGame(ws, gameId,playerName, cantidadJugadores) {
         sendMessage(ws, { type: 'error', message: 'El juego esta lleno' });
         return;
     }
+    if (game.started) {
+        sendMessage(ws, { type: 'error', message: 'el juego ya empezo' });
+        return;
+    }
     game.players.push({ws,name:playerName});
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
@@ -166,10 +170,6 @@ function handleStartGame(ws, gameId,cantidadJugadores) {
     const game = games[gameId];
     if (!game) {
         sendMessage(ws, { type: 'error', message: 'Juego no encontrado' });
-        return;
-    }
-    if (game.started) {
-        sendMessage(ws, { type: 'error', message: 'el juego ya empezo' });
         return;
     }
     if (game.players.length < cantidadJugadores) {
