@@ -56,10 +56,12 @@ function handleMessage(ws, message) {
             // WebSocket del jugador para crear un nuevo juego.
             handleCreateGame(ws,message.playerName);
             break;
-        case 'join':
+        case 'join':{
+            console.log(message.gameId);
+            handleJoinGame(ws, message.gameId,message.playerName,message.cantidadJugadores);
+        }
             // Para manejar la unión a un juego existente, se necesita la conexión WebSocket del jugador y el ID del
             // juego al cual el jugador se desea unir.
-            handleJoinGame(ws, message.gameId,message.playerName,message.cantidadJugadores);
             break;
         case 'start':
             // Para manejar el inicio de un juego, se necesita la conexión WebSocket del jugador y el ID del juego a
@@ -138,6 +140,7 @@ function getPlayers(ws, gameId) {
  */
 function handleJoinGame(ws, gameId,playerName, cantidadJugadores) {
     const game = games[gameId];
+    console.log(games);
     if (!game) {
         sendMessage(ws, { type: 'error', message: 'El juego no ha sido encontrado' });
         return;
