@@ -32,7 +32,7 @@
     height: var(--tablero-height);
     background: var(--position-bg-color);
     box-shadow: 0px 0px 50px #0009;
-    background:#F7F7F7 url('/taller-web-grupal/client/images/sea.jpg') 0 0 no-repeat;
+    background:#F7F7F7 url('../images/sea.jpg') 0 0 no-repeat;
     overflow: visible;
 }
 
@@ -87,7 +87,7 @@
     background-position: 0 calc(var(--position-height) * -1.4);
 }
 .barco-crucero{
-    background: transparent url('/taller-web-grupal/client/images/ship3.png') 0 0 no-repeat;
+    background: transparent url('../images/ship3.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
@@ -103,7 +103,7 @@
 }
 
 .barco-acorazado {
-    background: transparent url('/taller-web-grupal/client/images/ship1.png') 0 0 no-repeat;
+    background: transparent url('../images/ship1.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
