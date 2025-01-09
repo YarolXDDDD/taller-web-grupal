@@ -786,7 +786,7 @@
                     </tbody>
                 </table>
                 <div id="espacio-vacio"></div>
-                <button type="button" id="listo">Estoy Listo</button>
+                <button type="button" id="listo">Iniciar Partida</button>
                 <p id="restantes">(0) restantes</p>
             </section>
             <section id="salir-del-juego">
@@ -916,7 +916,7 @@
                     }
                         break;
                     case 'playerLeft-party':{
-                        eliminarTablas(mensaje.name);
+                        eliminarTablas(mensaje.name,mensaje.gamePlayers);
                     }
                         break;
                     case 'playerLeft-lobby':{
@@ -951,8 +951,8 @@
         // })
         
         document.getElementById('listo').addEventListener('click',()=>{
-
-        ws.send(JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva'), cantidadJugadores:localStorage.getItem('cantidadJugadores')}))
+            console.log ('se oprimio el boton');
+            ws.send(JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva'), cantidadJugadores:localStorage.getItem('cantidadJugadores')}));
         })
         document.getElementById('boton-volver').addEventListener('click',function (event){
             cargarNuevaSeccion('container-inicio','container-tablero-barcos');

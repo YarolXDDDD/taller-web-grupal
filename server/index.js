@@ -7,10 +7,12 @@ wss.on("connection", function connection(ws) {
     ws.on("message", function message(data) {
         try{
             const message = JSON.parse(data);
+            console.log (data);
             handleMessage(ws, message);
         }
         catch(error)
         {
+            console.log (data);
             console.log('error al parsear el mensaje');
         }
     });
@@ -165,15 +167,15 @@ function handleJoinGame(ws, gameId,playerName, cantidadJugadores) {
 function handleStartGame(ws, gameId,cantidadJugadores) {
     const game = games[gameId];
     if (!game) {
-        sendMessage(ws, { type: 'error', message: 'Game not found' });
+        sendMessage(ws, { type: 'error', message: 'Juego no encontrado' });
         return;
     }
     if (game.started) {
-        sendMessage(ws, { type: 'error', message: 'Game already started' });
+        sendMessage(ws, { type: 'error', message: 'el juego ya empezo' });
         return;
     }
     if (game.players.length < cantidadJugadores) {
-        sendMessage(ws, { type: 'error', message: 'Not enough players to start' });
+        sendMessage(ws, { type: 'error', message: 'No hay suficientes jugadores para iniciar el juego' });
         return;
     }
     game.started = true;
