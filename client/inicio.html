@@ -916,8 +916,7 @@
                     }
                         break;
                     case 'playerLeft-party':{
-                        if (localStorage.getItem('nombreJugador')===mensaje.name)
-                        eliminarTablas(mensaje.name,mensaje.gamePlayers);
+                        eliminarTablas(mensaje.name);
                     }
                         break;
                     case 'playerLeft-lobby':{
@@ -953,8 +952,7 @@
         
         document.getElementById('listo').addEventListener('click',()=>{
 
-        ws.send(JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva')}))
-        
+        ws.send(JSON.stringify({type:'start', gameId: localStorage.getItem('partidaActiva'), cantidadJugadores:localStorage.getItem('cantidadJugadores')}))
         })
         document.getElementById('boton-volver').addEventListener('click',function (event){
             cargarNuevaSeccion('container-inicio','container-tablero-barcos');

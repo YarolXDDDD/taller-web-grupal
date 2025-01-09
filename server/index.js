@@ -66,7 +66,7 @@ function handleMessage(ws, message) {
         case 'start':
             // Para manejar el inicio de un juego, se necesita la conexión WebSocket del jugador y el ID del juego a
             // iniciar.
-            handleStartGame(ws, message.gameId);
+            handleStartGame(ws, message.gameId,mensaje.cantidadJugadores);
             break;
         case 'move':
             // Para manejar los movimientos de los jugadores, se necesita la conexión WebSocket del jugador, el ID del
@@ -172,10 +172,10 @@ function handleStartGame(ws, gameId,cantidadJugadores) {
         sendMessage(ws, { type: 'error', message: 'Game already started' });
         return;
     }
-    // if (game.players.length < cantidadJugadores) {
-    //     sendMessage(ws, { type: 'error', message: 'Not enough players to start' });
-    //     return;
-    // }
+    if (game.players.length < cantidadJugadores) {
+        sendMessage(ws, { type: 'error', message: 'Not enough players to start' });
+        return;
+    }
     game.started = true;
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
