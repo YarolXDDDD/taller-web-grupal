@@ -977,10 +977,13 @@
                 alert("El ID del juego no puede estar vacío.");
                 return;
             }
-
             console.log("ID del juego ingresado:", idJuego);
 
-            ws.send(JSON.stringify({type:'join', playerName: localStorage.getItem('nombreJugador'), gameID:idJuego, cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
+            ws.send(JSON.stringify({
+                type:'join', 
+                playerName: localStorage.getItem('nombreJugador'), 
+                gameId: idJuego, 
+                cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
         });
         
     </script>

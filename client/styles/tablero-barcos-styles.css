@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
 
 #crea-tu-tablero {
-    font-family: 'Jaro', sans-serif;
+    font-family: 'Rye', sans-serif;
     font-size: 50px;
     width: 100%;
     margin:0;
@@ -162,7 +163,7 @@ header {
 }
 
 h2{
-    font-family: 'Jaro', sans-serif;
+    font-family: 'Rye', sans-serif;
     font-size: 30px;
     color: #0C2C85;
 }
