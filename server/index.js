@@ -268,10 +268,11 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
  * @param {WebSocket} ws - La conexión WebSocket del jugador.
  */
 function handleDisconnect(ws) {
+    console.log('te saldras de la partidaaaaa');
     for (const gameId in games) {
         const game = games[gameId];
         if (game.players.includes(ws)) {
-            console.log('te saldras de la partida');
+            console.log('te saldras de la partidaa');
             handleLeaveGame(ws, gameId);
             break;
         }
