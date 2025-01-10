@@ -267,12 +267,10 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
  * @param {WebSocket} ws - La conexión WebSocket del jugador.
  */
 function handleDisconnect(ws) {
-    console.log('te saldras de la partidaaaaa');
     for (const gameId in games) {
         const game = games[gameId];
         const player = game.players.find(player => player.ws === ws);
         if (player) {
-            console.log('te saldras de la partidaa');
             const playerName = player.name;
             console.log('Jugador desconectado:', playerName); // Verifica el nombre
             handleLeaveGame(ws, gameId, playerName, 'disconnect');
