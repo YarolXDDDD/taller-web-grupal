@@ -235,7 +235,6 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
     }
 
     game.players = game.players.filter((player) => player.ws !== ws);
-
     if (game.players.length === 0) {
         delete games[gameId];
         sendMessage(ws, { type: 'game-ended', gameId, message: 'Game ended'});
@@ -271,9 +270,12 @@ function handleDisconnect(ws) {
     console.log('te saldras de la partidaaaaa');
     for (const gameId in games) {
         const game = games[gameId];
-        if (game.players.includes(ws)) {
+        const player = game.players.find(player => player.ws === ws);
+        if (player) {
             console.log('te saldras de la partidaa');
-            handleLeaveGame(ws, gameId);
+            const playerName = player.name;
+            console.log('Jugador desconectado:', playerName); // Verifica el nombre
+            handleLeaveGame(ws, gameId, playerName, 'disconnect');
             break;
         }
     }
