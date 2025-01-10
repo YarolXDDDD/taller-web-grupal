@@ -3,7 +3,7 @@ Juego de Batalla Naval, hecho por Jharold Panza, Oscar Manrique y Alfredo Rondó
 para Programación Orientada a la Web, semestre sept. 2024 - enero 2025.
 
 El servidor se encuentra desplegado en Railway, usando node.js para su implementacion
-Debido a que el servidor se encuentra desplegado, para iniciar el servidor simplemente se requiere ejecutar el archivo inicio.html presente en la carpeta client.
+Debido a que el servidor se encuentra desplegado, para iniciar el servidor simplemente se requiere ejecutar el archivo inicio.html presente en la carpeta client(asumiendo que no hay un firewall en la red que lo bloquee, como deberia ser en la mayoria de servicios de internet publicos).
 Luego, registrar su nombre y confirmarlo para poder entrar a los diferentes modos de juego (cantidad de jugadores).
 Hasta ahora, solo nos enfocamos en la funcionalidad del servidor, utilizando alertas para interpretar los metodos ejecutados a
 lo largo del juego. 

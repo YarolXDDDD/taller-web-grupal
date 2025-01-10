@@ -20,6 +20,339 @@
     --position-height: 35px;
 }
 
+.nav-primaria {
+    background-color: #C4DFF9;
+    width: 100%;
+    height: auto;
+}
+
+.nav-primaria ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-primaria li {
+    width: 33.33%;
+    text-align: center;
+}
+
+#titulo-principal {
+    font-family: 'Rye', sans-serif;
+    font-size: 40px;
+    background-color: #FFFFFF;
+    width: 100%;
+    text-align: center;
+    color: #1449db;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#datos-del-jugador-frm-nombre {
+    width: 150px;
+}
+
+#nombre-jugador {
+    border: 1px solid;
+    color: #FFFFFF;
+    height: 45px; 
+    width: 150px;
+    background-color:#0C2C85; 
+    transition: background-color 0.5s ease, color 0.5s ease; 
+    text-decoration: none; 
+    font-family: 'Roboto Condensed', sans-serif; 
+    border-radius: 10px; 
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+#nombre-jugador:hover {
+    background-color:#1449DB;
+}
+
+section{
+    background-color: #F7F7F7;
+    width: auto;
+    padding: 50px;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0px 0px 50px #000;
+    border-radius: 10px; 
+}
+
+header{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header div{
+    font-family: 'Rye', sans-serif;
+    width: 100%;
+    text-align: center;
+    color: #1449DB;
+    background-color: white;
+}
+
+#etapa{
+    width: 80%;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+    background-color: #0C2C85;
+    color: white !important;
+    margin-bottom: 0px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+h2, h3{
+    font-family: 'Rye', sans-serif;
+    font-size: 30px;
+    color: #0C2C85;
+}
+
+p, label, li, a, td, th{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+p{
+    text-decoration: none;
+    color: #0C2C85;
+    transition: background-color 0.25s ease, color 0.25s ease; 
+}
+
+p:hover{
+    text-decoration: none;
+    color: #68BAFA;
+}
+
+a {
+    text-decoration: none;
+    color: #0C2C85;
+    transition: background-color 0.25s ease, color 0.25s ease; 
+}
+
+a:hover {
+    text-decoration: none;
+    color: #68BAFA;
+}
+
+button {
+    font-size: 18px; 
+    font-weight: normal;
+    height: 45px;
+    width: 150px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../images/mar3.jpg');
+    background-size: cover;
+    background-position: 50% 70%;
+    font-size: 18px; 
+    font-weight: normal; 
+}
+
+.nav-secundaria ul, #jugar-section ul {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 15px;
+
+}
+
+main ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin:2rem;
+}
+
+#preparacion {
+    width: auto;
+    box-shadow: none;
+    border-radius: 0px;
+    background-color: #FFFFFF;
+}
+
+#datos-del-jugador-frm-nombre {
+    width: 500px;
+    font-weight: normal;
+    font-size: 18px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#jugar-section, #que-es-section, #instrucciones-section {
+    width: 600px;
+}
+
+#crea-tu-tablero {
+    font-family: 'Rye', sans-serif;
+    width: 100%;
+    margin:0;
+    text-align: center;
+    color: #1449DB;
+    background-color: #F7F7F7;
+    box-shadow: 0px 0px 50px #000;
+}
+
+#piezas, #volver-inicio {
+    background-color: #FFFFFF;
+    width: auto;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0px 0px 50px #000;
+    border-radius: 15px;
+    padding: 50px;
+}
+
+#tableros {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#tableros-barcos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    flex-direction: row;
+}
+
+#piezas ul {
+    list-style: none;
+    padding:0;
+    margin:0;
+    margin-bottom: 35px;
+}
+
+#piezas p, #volver-inicio p{
+    color:#0C2C85;
+    text-decoration: none;
+    font-size: 18px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#piezas p {
+    background-color: #0C2C85;
+    color: white;
+    width: auto;
+}
+
+#piezas p:hover, #volver-inicio p:hover {
+    color:white;
+    text-decoration: none;
+    background-color: #68BAFA;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#piezas {
+    background-color: #FFFFFF;
+    position: relative;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    height: auto;
+    padding-bottom: 0px;
+    box-shadow: none;
+}
+
+#piezas > :nth-child(2){
+    position: relative;
+    height: 150px;
+    width: 750px;
+    overflow: visible;
+}
+
+#piezas h2 {
+    flex-basis: 100%;
+    margin: 0;
+}
+
+.pieza-portaavion {
+    position: absolute;
+    background: transparent url('../images/ship0.png') 0 0 no-repeat;
+    background-size: cover;
+    width: 37px;
+    height: 185px;
+    display:block;
+    bottom: 0;
+    left: 150px;
+}
+
+.pieza-acorazado {
+    position: absolute;
+    background: transparent url('../images/ship1.png') 0 0 no-repeat;
+    background-size: cover;
+    width: 37px;
+    height: 148px;
+    display:block;
+    bottom: 0;
+    left: 250px;
+}
+
+.pieza-crucero {
+    position: absolute;
+    background: transparent url('../images/ship3.png') 0 0 no-repeat;
+    background-size: cover;
+    width: 37px;
+    height: 111px;
+    display:block;
+    bottom: 0;
+    left: 350px;
+}
+
+.pieza-submarino {
+    position: absolute;
+    background: transparent url('../images/ship4.png') 0 0 no-repeat;
+    background-size: cover;
+    width: 37px;
+    height: 111px;
+    display:block;
+    bottom: 0;
+    left: 450px;
+}
+
+.pieza-destructor {
+    position: absolute;
+    background: transparent url('../images/ship5.png') 0 0 no-repeat;
+    background-size: cover;
+    width: 37px;
+    height: 74px;
+    display:block;
+    bottom: 0;
+    left: 550px;
+}
+
 .tablero {
     font-family: var(--font-family);
     position: relative;
@@ -32,13 +365,14 @@
     height: var(--tablero-height);
     background: var(--position-bg-color);
     box-shadow: 0px 0px 50px #0009;
-    background:#F7F7F7 url('../images/sea.jpg') 0 0 no-repeat;
+    background:#FFFFFF url('../images/sea.jpg') 0 0 no-repeat;
     overflow: visible;
 }
 
 .tablero-juego{
-    padding: 60px;
-    background-color: white;
+    padding: 50px;
+    padding-top: 5px;
+    background-color: #FFFFFF;
     border-radius: 10px;
 }
 
@@ -164,7 +498,6 @@
     transform: rotate(-90deg);
 }
 
-
 .hit {
     position: absolute;
     z-index:2;
@@ -173,6 +506,89 @@
     background: transparent url('../images/fire-20x20.png') 0 0 no-repeat;
     background-size: auto;
     animation: sprite-animation 1.7s steps(1) infinite;
+}
+
+#interfaz {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#tabla-torneo {
+    margin: 25px 0;
+    font-size: 1rem;
+    min-width: 400px;
+    border-collapse: collapse;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+#tabla-torneo thead tr{
+    background-color: #0C2C85;
+    color:white;
+    text-align: center;
+
+}
+
+#tabla-torneo th, #tabla-torneo td {
+    padding: 15px 20px;
+}
+
+#tabla-torneo tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+#tabla-torneo tbody tr:nth-of-type(even){
+    background-color: #e9e9e9;
+}
+
+#listo{
+    border: 1px solid;
+    color: white; 
+    height: 45px; 
+    width: 250px; 
+    background-color:#0C2C85; 
+    transition: background-color 0.5s ease, color 0.5s ease; 
+    text-decoration: none; 
+    font-family: 'Roboto Condensed', sans-serif; 
+    font-size: 18px; 
+    font-weight: normal; 
+    border-radius: 10px; 
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.salir-del-juego {
+    width: auto;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 50px #0009;
+    background-color: #F7F7F7;
+    padding-bottom: 60px !important;
+}
+
+.salir-del-juego a{
+    color:#0C2C85;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px ;
+    padding-bottom: 10px ;
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+.salir-del-juego a:hover {
+    color:white;
+    text-decoration: none;
+    background-color: #68BAFA;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @keyframes sprite-animation {
@@ -207,4 +623,95 @@
     93.33% { background-position: -60px -100px; }
     96.67% { background-position: -80px -100px; }
     100% { background-position: 0 0; }
+
+}
+
+#modo-juego {
+    font-family: 'Rye', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    color: #1449DB;
+    background-color: white;
+}
+
+#anuncio {
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: #0C2C85;
+    width: 95%;
+    padding: 20px;
+    border-radius: 15px;
+    margin:0;
+    font-size: 18px;
+    text-align: center;
+    color:white !important; 
+}
+
+/* #tableros > :nth-last-child(2) {
+    flex-basis: 100%;
+} */
+
+#boosters{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 15px;
+    box-shadow: 0px 0px 50px #0009;
+    background-color: #F7F7F7;
+    width: auto;
+    padding: 30px;
+}
+
+#boosters ul{
+    font-size: 18px;
+    font-weight: normal;
+    list-style: none;
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#boosters ul li{
+    border: 1px solid;
+    padding: 15px;
+    border-radius: 15px;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    cursor: pointer;
+}
+
+#boosters ul li:hover{
+    color:white;
+    background-color: #68BAFA;
+    border: 1px solid;
+}
+
+#puntaje {
+    font-size: 18px;
+}
+
+#compra-potenciador {
+    border: 1px solid;
+    color: white; 
+    height: 45px; 
+    width: 150px; 
+    background-color:#0C2C85; 
+    transition: background-color 0.5s ease, color 0.5s ease; 
+    text-decoration: none; 
+    font-family: 'Roboto Condensed', sans-serif; 
+    font-size: 18px; 
+    font-weight: normal; 
+    border-radius: 10px; 
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+#compra-potenciador:hover {
+    background-color:#1449DB;
 }

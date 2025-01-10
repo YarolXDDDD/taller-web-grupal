@@ -2,26 +2,29 @@
 <html lang="es-VE">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta author="Jharold Panza, Oscar Manrique "/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta author="Jharold Panza, Oscar Manrique " />
     <meta name="description" content="Este es un juego de Batalla Naval" />
     <meta name="keywords" content="Batalla Naval, juego, taller, semestre" />
     <meta name="robots" content="index,follow" />
     <title>Batalla Naval | Inicio</title>
-    <link rel="icon" href="https://seguropordias.com/img/contenido/barco-famoso-titanic.jpg" type="image/png" size="16x16 32x32 64x64" />
-    <link rel="stylesheet" href="styles/inicio-styles.css" type="text/css"/>
-    <link rel="stylesheet" href="styles/juego-styles.css" type="text/css"/>
-    <link rel="stylesheet" href="styles/styles.css" type="text/css"/>
-    <link rel="stylesheet" href="styles/tablero-barcos-styles.css" type="text/css"/>
-    <link rel="stylesheet" href="styles/lobby-styles.css" type="text/css"/>
+    <link rel="icon" href="https://seguropordias.com/img/contenido/barco-famoso-titanic.jpg" type="image/png"
+        size="16x16 32x32 64x64" />
+    <link rel="stylesheet" href="styles/inicio-styles.css" type="text/css" />
+    <link rel="stylesheet" href="styles/juego-styles.css" type="text/css" />
+    <link rel="stylesheet" href="styles/styles.css" type="text/css" />
+    <link rel="stylesheet" href="styles/tablero-barcos-styles.css" type="text/css" />
+    <link rel="stylesheet" href="styles/lobby-styles.css" type="text/css" />
     <script src="script/script.js" type="text/javascript"></script>
 </head>
 
 <body>
     <div class="main-container" id="container-inicio">
         <header>
-            <div id="titulo-principal"><h1>Batalla Naval</h1></div>       
+            <div id="titulo-principal">
+                <h1>Batalla Naval</h1>
+            </div>
             <nav class="nav-primaria">
                 <ul>
                     <li><a href="#inicio">¿Qué es "Batalla Naval"?</a></li>
@@ -35,8 +38,10 @@
             <section id="que-es-section">
                 <h2>¿Qué es "Batalla Naval"?</h2>
                 <p>
-                    Batalla naval es un juego por turnos dónde el objetivo es hundir la flota del enemigo tratando de adivinar la ubicación <br/> 
-                    de los barcos hostiles dentro de un tablero con coordenadas preestablecidas. ¡Sé más rápido que tus contrincantes y <br/>
+                    Batalla naval es un juego por turnos dónde el objetivo es hundir la flota del enemigo tratando de
+                    adivinar la ubicación <br />
+                    de los barcos hostiles dentro de un tablero con coordenadas preestablecidas. ¡Sé más rápido que tus
+                    contrincantes y <br />
                     alcanza la victoria en medio del océano!
                 </p>
             </section>
@@ -45,10 +50,10 @@
                 <h2>Jugar</h2>
                 <form action="#" method="post" id="datos-del-jugador-frm">
                     <label for="nombre">Nombre</label>
-                    <input id="datos-del-jugador-frm-nombre" name="nombre" placeholder="Nombre"/>
+                    <input id="datos-del-jugador-frm-nombre" name="nombre" placeholder="Nombre" />
                     <button id="nombre-jugador" type="button">Confirmar</button>
                 </form>
-                <br/>
+                <br />
                 <h3>Modos de Juego</h3>
                 <ul>
                     <li><a id="2-jugadores">2 Jugadores</a></li>
@@ -64,7 +69,7 @@
                     <ul>
                         <li><a href="#objetivo">Objetivo</a></li>
                         <li><a href="#componente">Componentes</a></li>
-                        <li><a href="#preparacion">Preparación</a></li>
+                        <li><a href="#preparacion-inst">Preparación</a></li>
                         <li><a href="#turno">Turnos</a></li>
                         <li><a href="#impacto">Impactos</a></li>
                         <li><a href="#hundimiento">Hundimiento</a></li>
@@ -76,24 +81,27 @@
                 <p>Hundir toda la flota enemiga antes que tu oponente hunda la tuya.</p>
                 <h3 id="componente">Componentes</h3>
                 <p>Tablero de juego para cada jugador (10x10 cuadrículas). Flota de barcos:
-                    <ul>
-                        <li>1 portaaviones (abarca 5 casillas, ya sea en sentido horizontal o vertical)</li>
-                        <li>1 acorazado (4 casillas, ya sea en sentido horizontal o vertical)</li>
-                        <li>1 crucero (3 casillas, ya sea en sentido horizontal o vertical)</li>
-                        <li>1 submarino (3 casillas, ya sea en sentido horizontal o vertical)</li>
-                        <li>1 destructor (2 casillas, ya sea en sentido horizontal o vertical)</li>
-                    </ul>
+                <ul>
+                    <li>1 portaaviones (abarca 5 casillas, ya sea en sentido horizontal o vertical)</li>
+                    <li>1 acorazado (4 casillas, ya sea en sentido horizontal o vertical)</li>
+                    <li>1 crucero (3 casillas, ya sea en sentido horizontal o vertical)</li>
+                    <li>1 submarino (3 casillas, ya sea en sentido horizontal o vertical)</li>
+                    <li>1 destructor (2 casillas, ya sea en sentido horizontal o vertical)</li>
+                </ul>
                 </p>
-                <h3 id="preparacion">Preparación</h3>
-                <p>Cada jugador coloca sus barcos en el tablero de manera oculta al oponente. 
-                    Los barcos pueden colocarse vertical u horizontalmente. 
+                <h3 id="preparacion-inst">Preparación</h3>
+                <p>Cada jugador coloca sus barcos en el tablero de manera oculta al oponente.
+                    Los barcos pueden colocarse vertical u horizontalmente.
                     Los barcos no pueden superponerse.</p>
                 <h3 id="turno">Turnos</h3>
-                <p>Los jugadores se turnan para "disparar" a las casillas del oponente, intentando adivinar la posición de los barcos enemigos.
+                <p>Los jugadores se turnan para "disparar" a las casillas del oponente, intentando adivinar la posición
+                    de los barcos enemigos.
                     Cada disparo se indica seleccionando una casilla en el tablero del oponente.
-                    El jugador a quien le corresponderá "disparar" por primera vez (primer turno) será seleccionado al azar.</p>
+                    El jugador a quien le corresponderá "disparar" por primera vez (primer turno) será seleccionado al
+                    azar.</p>
                 <h3 id="impacto">Impactos</h3>
-                <p>Si un jugador acierta un disparo en una casilla que contiene parte de un barco enemigo, se marca un "impacto" (hit).
+                <p>Si un jugador acierta un disparo en una casilla que contiene parte de un barco enemigo, se marca un
+                    "impacto" (hit).
                     Si el disparo no acierta en ningún barco, se marca un "fallo" (miss).</p>
                 <h3 id="hundimiento">Hundimiento</h3>
                 <p>Cuando todas las casillas de un barco han sido impactadas, el barco se considera "hundido".
@@ -112,7 +120,9 @@
 
     <div class="main-container" id="container-tablero-barcos">
         <header>
-            <div id="crea-tu-tablero"><h1>Crea tu Tablero</h1></div>
+            <div id="crea-tu-tablero">
+                <h1>Crea tu Tablero</h1>
+            </div>
         </header>
         <main>
             <section id="tableros-barcos">
@@ -125,8 +135,9 @@
                         <div class="pieza-submarino"></div>
                         <div class="pieza-destructor"></div>
                     </div>
-                    <h2>Sus barcos disponibles</h2>
                     <section id="preparacion">
+                        <h2>Sus barcos disponibles</h2>
+                        </br>
                         <ul id="lista-barcos">
                             <li id="portaavion">1 Portaaviones (5 casillas)</li>
                             <li id="acorazado">1 Acorazado (4 casillas)</li>
@@ -148,9 +159,11 @@
 
     <div class="main-container" id="container-juego">
         <header>
-            <div id="modo-juego"><h1>Modo</h1></div>
-            <h2 id="encabezado-enemigo"> Tus enemigos son:</h2>
-            <div id="anuncio"><h3>anuncio</h3></div>
+            <div id="modo-juego"><h1>Partida de </h1></div>
+            <h2 id="encabezado-enemigo"> Tus enemigos son: </h2>
+            <div id="anuncio">
+                <h3>anuncio</h3>
+            </div>
         </header>
         <main>
             <section id="tableros">
@@ -714,7 +727,7 @@
                 </ul>
                 <button id="compra-potenciador">Comprar</button>
             </section>
-            <section id="salir-del-juego">
+            <section class="salir-del-juego">
                 <h2>Salir del juego</h2>
                 <a id="boton-salir">Salir</a>
             </section>
@@ -723,7 +736,9 @@
 
     <div class="main-container" id="container-lobby">
         <header>
-            <div><h1>Lobby</h1></div>
+            <div>
+                <h1>Lobby</h1>
+            </div>
             <h2 id="etapa">Octavos</h2>
         </header>
         <main>
@@ -789,7 +804,7 @@
                 <button type="button" id="listo">Iniciar Partida</button>
                 <p id="restantes">(0) restantes</p>
             </section>
-            <section id="salir-del-juego">
+            <section class="salir-del-juego">
                 <h2>Salir del juego</h2>
                 <a id="boton-salir-lobby">Salir</a>
             </section>
@@ -797,170 +812,161 @@
     </div>
 
     <script>
-        const ws= new WebSocket('ws://taller-web-grupal-production.up.railway.app');
-        const cantidadJug2=document.getElementById('2-jugadores');
-        const cantidadJug3=document.getElementById('3-jugadores');
-        const cantidadJug4=document.getElementById('4-jugadores');
-        const nombreJug= document.getElementById('nombre-jugador');
+        const ws = new WebSocket('ws://taller-web-grupal-production.up.railway.app');
+        const cantidadJug2 = document.getElementById('2-jugadores');
+        const cantidadJug3 = document.getElementById('3-jugadores');
+        const cantidadJug4 = document.getElementById('4-jugadores');
+        const nombreJug = document.getElementById('nombre-jugador');
         ocultarSeccion('container-juego');
         ocultarSeccion('container-lobby');
         ocultarSeccion('container-tablero-barcos');
-    
-        let confirmacionNombre= false;
 
-        cantidadJug2.addEventListener ('click', function(event){
-            if (!confirmacionNombre)
-            {
-            alert('Por favor, confirme su nombre para jugar');
-            event.preventDefault();
+        let confirmacionNombre = false;
+
+        cantidadJug2.addEventListener('click', function (event) {
+            if (!confirmacionNombre) {
+                alert('Por favor, confirme su nombre para jugar');
+                event.preventDefault();
             }
-            else
-            {
+            else {
                 localStorage.setItem('cantidadJugadores', '2');
-                cargarNuevaSeccion('container-tablero-barcos','container-inicio',localStorage.getItem('cantidadJugadores'));
+                cargarNuevaSeccion('container-tablero-barcos', 'container-inicio', localStorage.getItem('cantidadJugadores'));
             }
         });
-        cantidadJug3.addEventListener ('click', function(event){
-            if (!confirmacionNombre)
-            {
-            alert('Por favor, confirme su nombre para jugar');
-            event.preventDefault();
+        cantidadJug3.addEventListener('click', function (event) {
+            if (!confirmacionNombre) {
+                alert('Por favor, confirme su nombre para jugar');
+                event.preventDefault();
             }
-            else
-            {
+            else {
                 localStorage.setItem('cantidadJugadores', '3');
-                cargarNuevaSeccion('container-tablero-barcos','container-inicio',localStorage.getItem('cantidadJugadores'));
+                cargarNuevaSeccion('container-tablero-barcos', 'container-inicio', localStorage.getItem('cantidadJugadores'));
             }
         });
-        cantidadJug4.addEventListener ('click', function(event){
-            if (!confirmacionNombre)
-            {
-            alert('Por favor, confirme su nombre para jugar');
-            event.preventDefault();
+        cantidadJug4.addEventListener('click', function (event) {
+            if (!confirmacionNombre) {
+                alert('Por favor, confirme su nombre para jugar');
+                event.preventDefault();
             }
-            else
-            {
+            else {
                 localStorage.setItem('cantidadJugadores', '4');
-                cargarNuevaSeccion('container-tablero-barcos','container-inicio',localStorage.getItem('cantidadJugadores'));
+                cargarNuevaSeccion('container-tablero-barcos', 'container-inicio', localStorage.getItem('cantidadJugadores'));
             }
         });
-        nombreJug.addEventListener ('click', function(event){
-            const nombre= document.getElementById('datos-del-jugador-frm-nombre');
-            const nombreSinEspacios= nombre.value.trim();
-            if (nombreSinEspacios==='')
-            {
-            alert('Por favor, ingrese su nombre para jugar');
-            event.preventDefault();
+        nombreJug.addEventListener('click', function (event) {
+            const nombre = document.getElementById('datos-del-jugador-frm-nombre');
+            const nombreSinEspacios = nombre.value.trim();
+            if (nombreSinEspacios === '') {
+                alert('Por favor, ingrese su nombre para jugar');
+                event.preventDefault();
             }
-            else
-            {
-            localStorage.setItem('nombreJugador',nombreSinEspacios);
-            confirmacionNombre=true;
-            alert('su nombre ha sido confirmado: '+nombreSinEspacios);
+            else {
+                localStorage.setItem('nombreJugador', nombreSinEspacios);
+                confirmacionNombre = true;
+                alert('su nombre ha sido confirmado: ' + nombreSinEspacios);
             }
         });
-        document.getElementById('torneo').addEventListener('click',function(event){
-            if (!confirmacionNombre)
-            {
-            alert('Por favor, confirme su nombre para jugar');
-            event.preventDefault();
+        document.getElementById('torneo').addEventListener('click', function (event) {
+            if (!confirmacionNombre) {
+                alert('Por favor, confirme su nombre para jugar');
+                event.preventDefault();
             }
-            else
-            {
+            else {
                 localStorage.setItem('cantidadJugadores', '8');
-                cargarNuevaSeccion('container-tablero-barcos','container-inicio',localStorage.getItem('cantidadJugadores'));
+                cargarNuevaSeccion('container-tablero-barcos', 'container-inicio', localStorage.getItem('cantidadJugadores'));
             }
         })
 
-        ws.addEventListener('open', ()=>{
+        ws.addEventListener('open', () => {
             console.log('Conectado al servidor ' + ws);
         })
 
-        ws.addEventListener('close', ()=>{
+        ws.addEventListener('close', () => {
             console.log('desconectado del servidor');
         })
 
-        ws.addEventListener('message', (event)=>{
-            try{
-                const mensaje= JSON.parse(event.data);
+        ws.addEventListener('message', (event) => {
+            try {
+                const mensaje = JSON.parse(event.data);
                 console.log(mensaje);
-                switch (mensaje.type){
-                    case 'gameCreated':{
-                        localStorage.setItem('partidaActiva',mensaje.gameId);
-                        const gamePlayers = mensaje.players.map(player => player.name);
-                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'),gamePlayers);
-                        cargarNuevaSeccion('container-lobby','container-tablero-barcos',localStorage.getItem('cantidadJugadores'));
-                    }
-                        break;
-                    case 'playerJoined':{
-                        console.log('HOLA!: '+mensaje.name+'te has unido a un juego exitosamente');
+                switch (mensaje.type) {
+                    case 'gameCreated': {
                         localStorage.setItem('partidaActiva', mensaje.gameId);
-                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'),mensaje.gamePlayers);
-                        cargarNuevaSeccion('container-lobby','container-tablero-barcos',localStorage.getItem('cantidadJugadores')); 
+                        const gamePlayers = mensaje.players.map(player => player.name);
+                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), gamePlayers);
+                        cargarNuevaSeccion('container-lobby', 'container-tablero-barcos', localStorage.getItem('cantidadJugadores'));
                     }
                         break;
-                    case 'gameStarted':{
-                        console.log('se ha iniciado el juego');
-                        cargarNuevaSeccion('container-juego','container-lobby',localStorage.getItem('cantidadJugadores'),mensaje.gamePlayers);
-                    } 
+                    case 'playerJoined': {
+                        console.log('HOLA!: ' + mensaje.name + 'te has unido a un juego exitosamente');
+                        localStorage.setItem('partidaActiva', mensaje.gameId);
+                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
+                        cargarNuevaSeccion('container-lobby', 'container-tablero-barcos', localStorage.getItem('cantidadJugadores'));
+                    }
                         break;
-                    case 'error':{
+                    case 'gameStarted': {
+                        console.log('se ha iniciado el juego');
+                        cargarNuevaSeccion('container-juego', 'container-lobby', localStorage.getItem('cantidadJugadores'), mensaje.gamePlayers);
+                    }
+                        break;
+                    case 'error': {
                         alert(mensaje.message);
                         event.preventDefault();
                     }
                         break;
-                    case 'getPlayers':{
+                    case 'getPlayers': {
                         console.log(mensaje.gamePlayers);
-                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'),mensaje.gamePlayers);
+                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                     }
                         break;
-                    case 'playerLeft-party':{
-                        eliminarTablas(mensaje.name,mensaje.gamePlayers);
+                    case 'playerLeft-party': {
+                        eliminarTablas(mensaje.name, mensaje.gamePlayers);
+                        alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
                     }
                         break;
-                    case 'playerLeft-lobby':{
-                        console.log('el jugador '+mensaje.name+' ha salido de la lobby');
-                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'),mensaje.gamePlayers);
+                    case 'playerLeft-lobby': {
+                        console.log('el jugador ' + mensaje.name + ' ha salido de la lobby');
+                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                     }
                         break;
                     case 'game-ended':
                         console.log(mensaje.message);
                         break;
-                    default:{
+                    default: {
                         alert('no se ha podido procesar el mensaje');
                         event.preventDefault();
                     }
                 }
             }
-            catch(error)
-            {
+            catch (error) {
                 console.log(error);
                 alert('error al parsear el mensaje');
             }
         })
 
-        document.getElementById('creacion-game').addEventListener('click',()=>{
+        document.getElementById('creacion-game').addEventListener('click', () => {
 
-            ws.send(JSON.stringify({type:'create', playerName: localStorage.getItem('nombreJugador')}))
+            ws.send(JSON.stringify({ type: 'create', playerName: localStorage.getItem('nombreJugador') }))
         })
 
-        document.getElementById('listo').addEventListener('click',()=>{
+        document.getElementById('listo').addEventListener('click', () => {
             ws.send(JSON.stringify({
-                type:'start', 
+                type: 'start',
                 gameId: localStorage.getItem('partidaActiva'),
-                cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
+                cantidadJugadores: localStorage.getItem('cantidadJugadores')
+            }))
         })
-        document.getElementById('boton-volver').addEventListener('click',function (event){
-            cargarNuevaSeccion('container-inicio','container-tablero-barcos');
+        document.getElementById('boton-volver').addEventListener('click', function (event) {
+            cargarNuevaSeccion('container-inicio', 'container-tablero-barcos');
         })
 
-        document.getElementById('boton-salir').addEventListener('click',function(event){
-            ws.send(JSON.stringify ({type:'leave-party', gameId: localStorage.getItem('partidaActiva'), playerName:localStorage.getItem('nombreJugador')}));
-            cargarNuevaSeccion('container-inicio','container-juego');
+        document.getElementById('boton-salir').addEventListener('click', function (event) {
+            ws.send(JSON.stringify({ type: 'leave-party', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador') }));
+            cargarNuevaSeccion('container-inicio', 'container-juego');
         })
-        document.getElementById('boton-salir-lobby').addEventListener('click',function(event){
-            ws.send(JSON.stringify ({type:'leave-lobby', gameId: localStorage.getItem('partidaActiva'), playerName:localStorage.getItem('nombreJugador')}));
-            cargarNuevaSeccion('container-inicio','container-lobby');
+        document.getElementById('boton-salir-lobby').addEventListener('click', function (event) {
+            ws.send(JSON.stringify({ type: 'leave-lobby', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador') }));
+            cargarNuevaSeccion('container-inicio', 'container-lobby');
         })
 
         document.getElementById('union-game').addEventListener('click', function () {
@@ -976,12 +982,14 @@
             console.log("ID del juego ingresado:", idJuego);
 
             ws.send(JSON.stringify({
-                type:'join', 
-                playerName: localStorage.getItem('nombreJugador'), 
-                gameId: idJuego, 
-                cantidadJugadores: localStorage.getItem('cantidadJugadores')}))
+                type: 'join',
+                playerName: localStorage.getItem('nombreJugador'),
+                gameId: idJuego,
+                cantidadJugadores: localStorage.getItem('cantidadJugadores')
+            }))
         });
-        
+
     </script>
 </body>
+
 </html>
