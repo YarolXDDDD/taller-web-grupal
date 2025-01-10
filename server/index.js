@@ -253,9 +253,9 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
         );
     }
     else{
-        console.log('te vas a salir de la partida')
+        const gamePlayers = game.players.map(player => player.name);
         game.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'playerLeft', gameId, name:playerName, gamePlayers: gamePlayersOriginal}),
+            sendMessage(player.ws, { type: 'playerLeft', gameId, name:playerName, gamePlayers: gamePlayers}),
         );
     }
 

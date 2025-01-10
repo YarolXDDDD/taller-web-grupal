@@ -514,6 +514,7 @@ function eliminarTablas(playerOut){
 
     console.log (playerOut);
     const tablaPlayerOut= document.getElementById(playerOut);
+    if (tablaPlayerOut)
     tablaPlayerOut.remove();
 }
 

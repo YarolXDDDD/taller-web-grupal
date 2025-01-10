@@ -11,11 +11,8 @@
     <title>Batalla Naval | Inicio</title>
     <link rel="icon" href="https://seguropordias.com/img/contenido/barco-famoso-titanic.jpg" type="image/png"
         size="16x16 32x32 64x64" />
-    <link rel="stylesheet" href="styles/inicio-styles.css" type="text/css" />
-    <link rel="stylesheet" href="styles/juego-styles.css" type="text/css" />
     <link rel="stylesheet" href="styles/styles.css" type="text/css" />
-    <link rel="stylesheet" href="styles/tablero-barcos-styles.css" type="text/css" />
-    <link rel="stylesheet" href="styles/lobby-styles.css" type="text/css" />
+
     <script src="script/script.js" type="text/javascript"></script>
 </head>
 
@@ -934,7 +931,9 @@
                         break;
                     case 'playerLeft': {
                         eliminarTablas(mensaje.name, mensaje.gamePlayers);
+                        alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
+                        break;
                     }
                     default: {
                         alert('no se ha podido procesar el mensaje');
