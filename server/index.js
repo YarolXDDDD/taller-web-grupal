@@ -15,6 +15,7 @@ wss.on("connection", function connection(ws) {
         }
     });
     ws.on('close', () => {
+        console.log('te has salido de batalla naval');
         handleDisconnect(ws);
     });
     console.log("ahora jugaras batalla naval");
