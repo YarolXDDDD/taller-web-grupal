@@ -254,6 +254,7 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
         );
     }
     else{
+        console.log('te vas a salir de la partida')
         game.players.forEach((player) =>
             sendMessage(player.ws, { type: 'playerLeft', gameId, name:playerName, gamePlayers: gamePlayersOriginal}),
         );
@@ -270,6 +271,7 @@ function handleDisconnect(ws) {
     for (const gameId in games) {
         const game = games[gameId];
         if (game.players.includes(ws)) {
+            console.log('te saldras de la partida');
             handleLeaveGame(ws, gameId);
             break;
         }
