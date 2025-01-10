@@ -932,6 +932,10 @@
                     case 'game-ended':
                         console.log(mensaje.message);
                         break;
+                    case 'playerLeft': {
+                        eliminarTablas(mensaje.name, mensaje.gamePlayers);
+                        alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
+                    }
                     default: {
                         alert('no se ha podido procesar el mensaje');
                         event.preventDefault();

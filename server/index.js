@@ -252,6 +252,11 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
             sendMessage(player.ws, { type: 'playerLeft-lobby', gameId, name:playerName, gamePlayers: gamePlayers }),
         );
     }
+    else{
+        game.players.forEach((player) =>
+            sendMessage(player.ws, { type: 'playerLeft', gameId, name:playerName, gamePlayers: gamePlayersOriginal}),
+        );
+    }
 
 }
 
