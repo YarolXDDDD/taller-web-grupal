@@ -478,6 +478,7 @@
         ws.addEventListener('message', (event) => {
             try {
                 const mensaje = JSON.parse(event.data);
+                console.log("Se supone que me llegó algo");
                 switch (mensaje.type) {
                     case 'gameCreated': {
                         localStorage.setItem('partidaActiva', mensaje.gameId);
@@ -531,21 +532,22 @@
                     }
                         break;
                     case 'attack': {
+                        console.log('ataque recibido');
                         if (verificarPrevioAtaque(mensaje.casilla)) verificarAtaque(mensaje.casilla);
                     }
                     break;
                     case 'attack-done':
                         {
+                            console.log('ataque realizado');
                             alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
                             modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                             asignarClicks(mensaje.gamePlayers, mensaje.turno);
                         }
                         break;
                     default: {
-                        alert(mensaje.type);
+                        alert('Se supone que debería aparecer');
                         event.preventDefault();
                     }
-                    break;
                 }
             }
             catch (error) {
