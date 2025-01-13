@@ -500,7 +500,7 @@ main {
 
 .hit {
     position: absolute;
-    z-index:2;
+    z-index:20;
     width: var(--position-width);
     height: calc(var(--position-height) + 5px);
     background: transparent url('../images/fire-20x20.png') 0 0 no-repeat;

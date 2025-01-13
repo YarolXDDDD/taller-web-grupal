@@ -77,7 +77,7 @@ function handleMessage(ws, message) {
         case 'player-attacked':
             // Para manejar los movimientos de los jugadores, se necesita la conexión WebSocket del jugador, el ID del
             // juego y el movimiento del jugador. El movimiento se reenvía a todos los jugadores en el juego.
-            handleAttacked(ws, message.gameId, message.casilla,message.resultadoAtaque);
+            handleAttacked(ws, message.gameId, message.casilla,message.hit);
             break;
         case 'leave-party':
             // Para manejar el abandono de un juego, se necesita la conexión WebSocket del jugador y el ID del juego.

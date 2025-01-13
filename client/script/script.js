@@ -223,7 +223,6 @@ function crearTablero (tableros)
 function crearTableroPartida (jugadores, tableros, listaJugadores)
 {
     const jugadorActual= listaJugadores.indexOf(localStorage.getItem('nombreJugador'))+1;
-
     for (let j=1; j<=jugadores; j++)
     {
         let tableroJuego = document.createElement('div');
@@ -517,9 +516,15 @@ function verificarAtaque(casilla){
     if (casillaAtacada)
     {
         if (casillaAtacada.classList.contains('barco'))
+        {
+            console.log ("Barco encontrado");
             ws.send (JSON.stringify({ type: 'player-attacked', gameId:localStorage.getItem('partidaActiva'), casilla: casilla, hit: true}));
+        }
         else 
+        {
+            console.log ("Barco no encontrado");
             ws.send (JSON.stringify({ type: 'player-attacked', gameId:localStorage.getItem('partidaActiva'),casilla: casilla, hit: false}));
+        }
     }
     else
     console.error('la casilla atacada no existe');
@@ -545,9 +550,7 @@ function manejarAtaque(event){
     console.log(jugadorAtacado);
     console.log(casillaAtacada)
     if (!verificarPrevioAtaque(casillaAtacada)) alert ("La casilla ya ha sido atacada, has perdido tu turno");
-    console.log ("manejarAtaque");
     ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
-    console.log ("envié el ataque");
 }
 
 function asignarClicks(gamePlayers, turno)
