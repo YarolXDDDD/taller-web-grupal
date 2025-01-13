@@ -478,7 +478,7 @@
         ws.addEventListener('message', (event) => {
             try {
                 const mensaje = JSON.parse(event.data);
-                console.log(mensaje);
+                console.log(mensaje.type);
                 switch (mensaje.type) {
                     case 'gameCreated': {
                         localStorage.setItem('partidaActiva', mensaje.gameId);
@@ -529,11 +529,12 @@
                         eliminarTablas(mensaje.name, mensaje.gamePlayers);
                         alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
-                        break;
                     }
+                        break;
                     case 'attack': {
                         if (verificarPrevioAtaque(mensaje.casilla)) verificarAtaque(mensaje.casilla);
                     }
+                    break;
                     case 'attack-done':
                         {
                             alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
@@ -542,9 +543,10 @@
                         }
                         break;
                     default: {
-                        alert('no se ha podido procesar el mensaje');
+                        alert(mensaje.type);
                         event.preventDefault();
                     }
+                    break;
                 }
             }
             catch (error) {
