@@ -478,7 +478,6 @@
         ws.addEventListener('message', (event) => {
             try {
                 const mensaje = JSON.parse(event.data);
-                console.log(mensaje.type);
                 switch (mensaje.type) {
                     case 'gameCreated': {
                         localStorage.setItem('partidaActiva', mensaje.gameId);
@@ -488,7 +487,7 @@
                     }
                         break;
                     case 'playerJoined': {
-                        console.log('HOLA!: ' + mensaje.name + 'te has unido a un juego exitosamente');
+                        console.log('HOLA!: ' + mensaje.name + ' te has unido a un juego exitosamente');
                         localStorage.setItem('partidaActiva', mensaje.gameId);
                         alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                         cargarNuevaSeccion('container-lobby', 'container-tablero-barcos', localStorage.getItem('cantidadJugadores'));
@@ -601,5 +600,4 @@
         });
     </script>
 </body>
-
 </html>
