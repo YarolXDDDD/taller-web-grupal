@@ -443,15 +443,15 @@ main {
     white-space: nowrap;
     overflow: hidden;
 }
-  
+
 .barco-acorazado.tile-2 {
     background-position: 0 calc(var(--position-height) * -1);
 }
-  
+
 .barco-acorazado.tile-3 {
     background-position: 0 calc(var(--position-height) * -2.3);
 }
-  
+
 .barco-acorazado.tile-4 {
     background-position: 0 calc(var(--position-height) * -3.4);
 }

@@ -11,6 +11,8 @@ los procesos llevados a cabo en el servidor se imprimen en la consola del navega
 En cuanto a funcionalidad de juego, las tablas se crean dinamicamente, pero aún no se colocan los barcos o figuras en el tablero a eleccion del jugador.
 Se encuentran las funciones de unirse a partida, crear partida, abrir una partida de 1 3 o 4 jugadores o el modo torneo (el cual seria una partida de 8), la creacion de lobbys donde se ven los jugadores en partida,
 la capacidad de unirse a partida, donde el primer jugador en unirse (el que creo la partida) sera el que pueda iniciarla, se puede salir de la partida tanto en el juego, eliminando su correspondiente tabla, como
-en el lobby, actualizando la tabla de jugadores del lobby, no se puede unir a partidas empezadas ni a lobbys llenas, y se elimina la tabla del usuario al desconectarse
+en el lobby, actualizando la tabla de jugadores del lobby, no se puede unir a partidas empezadas ni a lobbys llenas, entre otras funciones
+
+el archivo railway.toml es unicamente configurativo para el despliegue en railway, no tiene incidencia real en la ejecucion del juego
 
 

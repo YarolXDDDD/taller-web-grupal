@@ -69,10 +69,15 @@ function handleMessage(ws, message) {
             // iniciar.
             handleStartGame(ws, message.gameId,message.cantidadJugadores);
             break;
-        case 'move':
+        case 'attack':
             // Para manejar los movimientos de los jugadores, se necesita la conexión WebSocket del jugador, el ID del
             // juego y el movimiento del jugador. El movimiento se reenvía a todos los jugadores en el juego.
-            handleMove(ws, message.gameId, message.move);
+            handleAttack(ws, message.gameId, message.casilla,message.jugadorAtacado);
+            break;
+        case 'player-attacked':
+            // Para manejar los movimientos de los jugadores, se necesita la conexión WebSocket del jugador, el ID del
+            // juego y el movimiento del jugador. El movimiento se reenvía a todos los jugadores en el juego.
+            handleAttacked(ws, message.gameId, message.casilla,message.resultadoAtaque);
             break;
         case 'leave-party':
             // Para manejar el abandono de un juego, se necesita la conexión WebSocket del jugador y el ID del juego.
@@ -180,7 +185,7 @@ function handleStartGame(ws, gameId,cantidadJugadores) {
     game.started = true;
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
-            sendMessage(player.ws, { type: 'gameStarted', gameId, gamePlayers: gamePlayers });
+            sendMessage(player.ws, { type: 'gameStarted', gameId, gamePlayers: gamePlayers, turno: game.turn });
     });
 }
 
@@ -191,7 +196,7 @@ function handleStartGame(ws, gameId,cantidadJugadores) {
  * @param {string} gameId - El ID del juego.
  * @param {string} move - El movimiento del jugador.
  */
-function handleMove(ws, gameId, move) {
+function handleAttack(ws, gameId, casilla, jugadorAtacado) {
     const game = games[gameId];
     if (!game) {
         sendMessage(ws, { type: 'error', message: 'Game not found' });
@@ -201,17 +206,26 @@ function handleMove(ws, gameId, move) {
         sendMessage(ws, { type: 'error', message: 'Game not started' });
         return;
     }
-    if (game.players[game.turn] !== ws) {
-        sendMessage(ws, { type: 'error', message: 'Not your turn' });
+    if (game.players[game.turn].ws !== ws) {
+        sendMessage(ws, { type: 'error', message: 'No es su turno, espere a los demas jugadores por favor' });
         return;
     }
-    game.players.forEach((player) => {
-        if (player !== ws) {
-            sendMessage(player.ws, { type: 'move', gameId, move });
-        }
-    });
-    sendMessage(ws, { type: 'move', gameId, move });
+
     game.turn = (game.turn + 1) % game.players.length;
+    const gamePlayers = game.players.map(player => player.name);
+    game.players.forEach((player) => {
+        if (player.name===jugadorAtacado)
+        sendMessage(player.ws, { type: 'attack', gameId, casilla: casilla, gamePlayers:gamePlayers, turno: game.turn });
+    });
+}
+
+function handleAttacked(ws, gameId, casilla, resultadoAtaque)
+{
+    const game = games[gameId];
+    const gamePlayers = game.players.map(player => player.name);
+        game.players.forEach((player) => {
+            sendMessage(player.ws, { type: 'attack-done', gameId, gamePlayers: gamePlayers, casilla:casilla, turno: game.turn, resultadoAtaque:resultadoAtaque });
+        });
 }
 
 /**
