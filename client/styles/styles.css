@@ -67,12 +67,59 @@ form {
     text-decoration: none; 
     font-family: 'Roboto Condensed', sans-serif; 
     border-radius: 10px; 
+    border: none;
     cursor: pointer;
     align-items: center;
     justify-content: center;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    display: inline-flex; 
+    font-weight: normal;
+    font-size: 18px;
 }
 
-#nombre-jugador:hover {
+#selector-orientacion, #selector-barco {
+    height: 35px; 
+    width: 150px;
+    font-size: 18px;
+    font-family: 'Roboto Condensed', sans-serif; 
+    border-radius: 10px; 
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-left: 10px;
+}
+
+button {
+    color: #FFFFFF;
+    height: auto; 
+    width: auto;
+    background-color:#0C2C85; 
+    transition: background-color 0.5s ease, color 0.5s ease; 
+    text-decoration: none; 
+    font-family: 'Roboto Condensed', sans-serif; 
+    border-radius: 10px; 
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    display: inline-flex; 
+    font-weight: normal;
+    font-size: 18px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+button:hover {
     background-color:#1449DB;
 }
 
@@ -82,7 +129,7 @@ section{
     padding: 50px;
     text-align: center;
     overflow: hidden;
-    box-shadow: 0px 0px 50px #000;
+    box-shadow: 0px 0px 50px #0009;
     border-radius: 10px; 
 }
 
@@ -149,13 +196,6 @@ a:hover {
     color: #68BAFA;
 }
 
-button {
-    font-size: 18px; 
-    font-weight: normal;
-    height: 45px;
-    width: 150px;
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -190,7 +230,7 @@ main {
 #preparacion {
     width: auto;
     box-shadow: none;
-    border-radius: 0px;
+    border-radius: 10px;
     background-color: #FFFFFF;
 }
 
@@ -215,7 +255,7 @@ main {
     box-shadow: 0px 0px 50px #000;
 }
 
-#piezas, #volver-inicio {
+#volver-inicio {
     background-color: #FFFFFF;
     width: auto;
     text-align: center;
@@ -223,6 +263,22 @@ main {
     box-shadow: 0px 0px 50px #000;
     border-radius: 15px;
     padding: 50px;
+}
+
+#volver-inicio p{
+    color:#0C2C85;
+    text-decoration: none;
+    font-size: 18px;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#volver-inicio p:hover {
+    color:white;
+    text-decoration: none;
+    background-color: #68BAFA;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #tableros {
@@ -244,113 +300,11 @@ main {
     flex-direction: row;
 }
 
-#piezas ul {
-    list-style: none;
-    padding:0;
-    margin:0;
-    margin-bottom: 35px;
-}
-
-#piezas p, #volver-inicio p{
-    color:#0C2C85;
-    text-decoration: none;
-    font-size: 18px;
-    border: 1px solid;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-#piezas p {
-    background-color: #0C2C85;
-    color: white;
-    width: auto;
-}
-
-#piezas p:hover, #volver-inicio p:hover {
-    color:white;
-    text-decoration: none;
-    background-color: #68BAFA;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-#piezas {
-    background-color: #FFFFFF;
-    position: relative;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    height: auto;
-    padding-bottom: 0px;
-    box-shadow: none;
-}
-
-#piezas > :nth-child(2){
-    position: relative;
-    height: 150px;
-    width: 750px;
-    overflow: visible;
-}
-
-#piezas h2 {
-    flex-basis: 100%;
-    margin: 0;
-}
-
-.pieza-portaavion {
-    position: absolute;
-    background: transparent url('../images/ship0.png') 0 0 no-repeat;
-    background-size: cover;
-    width: 37px;
-    height: 185px;
-    display:block;
-    bottom: 0;
-    left: 150px;
-}
-
-.pieza-acorazado {
-    position: absolute;
-    background: transparent url('../images/ship1.png') 0 0 no-repeat;
-    background-size: cover;
-    width: 37px;
-    height: 148px;
-    display:block;
-    bottom: 0;
-    left: 250px;
-}
-
-.pieza-crucero {
-    position: absolute;
-    background: transparent url('../images/ship3.png') 0 0 no-repeat;
-    background-size: cover;
-    width: 37px;
-    height: 111px;
-    display:block;
-    bottom: 0;
-    left: 350px;
-}
-
-.pieza-submarino {
-    position: absolute;
-    background: transparent url('../images/ship4.png') 0 0 no-repeat;
-    background-size: cover;
-    width: 37px;
-    height: 111px;
-    display:block;
-    bottom: 0;
-    left: 450px;
-}
-
-.pieza-destructor {
-    position: absolute;
-    background: transparent url('../images/ship5.png') 0 0 no-repeat;
-    background-size: cover;
-    width: 37px;
-    height: 74px;
-    display:block;
-    bottom: 0;
-    left: 550px;
+.barco {
+    image-rendering: -webkit-optimize-contrast; /* Para navegadores basados en WebKit (Chrome, Safari) */
+    image-rendering: optimize-contrast; /* Estándar */
+    image-rendering: crisp-edges; /* Para bordes nítidos */
+    image-rendering: pixelated; /* Si quieres un efecto pixelado */
 }
 
 .tablero {
@@ -371,7 +325,6 @@ main {
 
 .tablero-juego{
     padding: 50px;
-    padding-top: 5px;
     background-color: #FFFFFF;
     border-radius: 10px;
 }
@@ -379,7 +332,7 @@ main {
 .tablero-juego h2 {
     top: -10px;
     left: 204px;
-    padding:0;
+    padding: 0;
 }
 
 .position {
@@ -399,7 +352,7 @@ main {
 }
 
 .barco-portaaviones {
-    background: transparent url('../images/ship0.png') 0 0 no-repeat;
+    background: transparent url('../images/ships/portaaviones.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
@@ -421,7 +374,7 @@ main {
     background-position: 0 calc(var(--position-height) * -1.4);
 }
 .barco-crucero{
-    background: transparent url('../images/ship3.png') 0 0 no-repeat;
+    background: transparent url('../images/ships/crucero.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
@@ -437,7 +390,7 @@ main {
 }
 
 .barco-acorazado {
-    background: transparent url('../images/ship1.png') 0 0 no-repeat;
+    background: transparent url('../images/ships/acorazado.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
@@ -457,7 +410,7 @@ main {
 }
 
 .barco-submarino{
-    background: transparent url('../images/ship4.png') 0 0 no-repeat;
+    background: transparent url('../images/ships/submarino.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
@@ -473,7 +426,7 @@ main {
 }
 
 .barco-destructor {
-    background: transparent url('../images/ship5.png') 0 0 no-repeat;
+    background: transparent url('../images/ships/destructor.png') 0 0 no-repeat;
     background-size: cover;
     text-indent: 150%;
     white-space: nowrap;
@@ -483,8 +436,6 @@ main {
 .barco-destructor.tile-2{
     background-position: 0 calc(var(--position-height) * -1);
 }
-
-.barco
 
 .horizontal { 
     transform: rotate(90deg);
@@ -498,14 +449,26 @@ main {
     transform: rotate(-90deg);
 }
 
+.barco-acorazado.horizontal{
+    transform: rotate(-90deg);
+}
+
+.barco-submarino.horizontal{
+    transform: rotate(-90deg);
+}
+
+.barco-crucero.horizontal{
+    transform: rotate(-90deg);
+}
+
 .hit {
-    position: absolute;
     z-index:20;
     width: var(--position-width);
     height: calc(var(--position-height) + 5px);
     background: transparent url('../images/fire-20x20.png') 0 0 no-repeat;
     background-size: auto;
     animation: sprite-animation 1.7s steps(1) infinite;
+    pointer-events: none;
 }
 
 #interfaz {
@@ -523,7 +486,7 @@ main {
     border-collapse: collapse;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 50px #0009;
 }
 
 #tabla-torneo thead tr{

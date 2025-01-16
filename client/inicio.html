@@ -12,7 +12,6 @@
     <link rel="icon" href="https://seguropordias.com/img/contenido/barco-famoso-titanic.jpg" type="image/png"
         size="16x16 32x32 64x64" />
     <link rel="stylesheet" href="styles/styles.css" type="text/css" />
-
     <script src="script/script.js" type="text/javascript"></script>
 </head>
 
@@ -24,29 +23,18 @@
             </div>
             <nav class="nav-primaria">
                 <ul>
-                    <li><a href="#inicio">¿Qué es "Batalla Naval"?</a></li>
                     <li><a href="#jugar-section">Jugar</a></li>
+                    <li><a href="#inicio">¿Qué es "Batalla Naval"?</a></li>
                     <li><a href="#instrucciones-section">Instrucciones</a></li>
                 </ul>
             </nav>
         </header>
         <main>
 
-            <section id="que-es-section">
-                <h2>¿Qué es "Batalla Naval"?</h2>
-                <p>
-                    Batalla naval es un juego por turnos dónde el objetivo es hundir la flota del enemigo tratando de
-                    adivinar la ubicación <br />
-                    de los barcos hostiles dentro de un tablero con coordenadas preestablecidas. ¡Sé más rápido que tus
-                    contrincantes y <br />
-                    alcanza la victoria en medio del océano!
-                </p>
-            </section>
-
             <section id="jugar-section">
                 <h2>Jugar</h2>
                 <form action="#" method="post" id="datos-del-jugador-frm">
-                    <label for="nombre">Nombre</label>
+                    <label for="datos-del-jugador-frm-nombre">Nombre</label>
                     <input id="datos-del-jugador-frm-nombre" name="nombre" placeholder="Nombre" />
                     <button id="nombre-jugador" type="button">Confirmar</button>
                 </form>
@@ -58,6 +46,15 @@
                     <li><a id="4-jugadores">4 Jugadores</a> </li>
                     <li><a id="torneo">Torneo</a></li>
                 </ul>
+            </section>
+
+            <section id="que-es-section">
+                <h2>¿Qué es "Batalla Naval"?</h2>
+                <p>
+                    Batalla naval es un juego por turnos dónde el objetivo es hundir la flota del enemigo tratando de
+                    adivinar la ubicación de los barcos hostiles dentro de un tablero con coordenadas preestablecidas. 
+                    ¡Sé más rápido que tus contrincantes y alcanza la victoria en medio del océano!
+                </p>
             </section>
 
             <section id="instrucciones-section">
@@ -123,29 +120,37 @@
         </header>
         <main>
             <section id="tableros-barcos">
-                <div id="piezas">
-                    <h2>Tus piezas</h2>
-                    <div>
-                        <div class="pieza-portaavion"></div>
-                        <div class="pieza-acorazado"></div>
-                        <div class="pieza-crucero"></div>
-                        <div class="pieza-submarino"></div>
-                        <div class="pieza-destructor"></div>
-                    </div>
-                    <section id="preparacion">
-                        <h2>Sus barcos disponibles</h2>
-                        </br>
-                        <ul id="lista-barcos">
-                            <li id="portaavion">1 Portaaviones (5 casillas)</li>
-                            <li id="acorazado">1 Acorazado (4 casillas)</li>
-                            <li id="crucero">1 Crucero (3 casillas)</li>
-                            <li id="submarino">1 Submarino (3 casillas)</li>
-                            <li id="destructor">1 Destructor (2 casillas)</li>
-                        </ul>
-                        <p id="union-game">Unirme a un juego</p>
-                        <p id="creacion-game">Crear un juego</p>
-                    </section>
-                </div>
+                <div id="tableros-creacion"></div>
+                
+                <section id="preparacion">
+                    <h2>Sus barcos disponibles</h2>
+
+                    <select id="selector-barco">
+                        <option value="portaaviones">Portaaviones</option>
+                        <option value="acorazado">Acorazado</option>
+                        <option value="crucero">Crucero</option>
+                        <option value="submarino">Submarino</option>
+                        <option value="destructor">Destructor</option>
+                    </select>
+                    
+                    <select id="selector-orientacion">
+                        <option value="horizontal">Horizontal</option>
+                        <option value="vertical">Vertical</option>
+                    </select>
+
+                    <ul id="lista-barcos">
+                        <li>1 Portaaviones (5 casillas)</li>
+                        <li>1 Acorazado (4 casillas)</li>
+                        <li>1 Crucero (3 casillas)</li>
+                        <li>1 Submarino (3 casillas)</li>
+                        <li>1 Destructor (2 casillas)</li>
+                        <br>
+                        <li>Para poder unirte o crear una partida</li>
+                        <li>debes colocar todos los barcos en el tablero.</li>
+                    </ul>
+                    <button id="union-game">Unirme a un juego</button>
+                    <button id="creacion-game">Crear un juego</button>
+                </section>
             </section>
             <section id="volver-inicio">
                 <h2>Volver al Inicio</h2>
@@ -496,6 +501,7 @@
                     case 'gameStarted': {
                         console.log('se ha iniciado el juego');
                         cargarNuevaSeccion('container-juego', 'container-lobby', localStorage.getItem('cantidadJugadores'), mensaje.gamePlayers);
+                        modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                         recopilarEnemigos();
                         asignarClicks(mensaje.gamePlayers, mensaje.turno);
                     }
@@ -511,7 +517,7 @@
                     }
                         break;
                     case 'playerLeft-party': {
-                        eliminarTablas(mensaje.name, mensaje.gamePlayers);
+                        eliminarTablas(mensaje.name);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
                         recopilarEnemigos();
                     }
@@ -525,22 +531,42 @@
                         console.log(mensaje.message);
                         break;
                     case 'playerLeft': {
-                        eliminarTablas(mensaje.name, mensaje.gamePlayers);
+                        eliminarTablas(mensaje.name);
                         alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
                     }
                         break;
                     case 'attack': {
-                        if (verificarPrevioAtaque(mensaje.casilla)) verificarAtaque(mensaje.casilla);
+                        verificarAtaque(mensaje.casilla);
                     }
                     break;
                     case 'attack-done':
                         {
-                            alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
+                            console.log(mensaje);
+                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
+                            if (!verificarGamerOver())
+                            {
+                                modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
+                                asignarClicks(mensaje.gamePlayers, mensaje.turno);
+                            }
+                            
+                        }
+                        break;
+                    case 'player-defeated':
+                        {
+                            eliminarTablas(mensaje.name);
+                            alert('El jugador ' + mensaje.name + ' ha sido derrotado.');
+                            recopilarEnemigos();
                             modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                             asignarClicks(mensaje.gamePlayers, mensaje.turno);
                         }
                         break;
+                    case 'victory':
+                        {
+                            alert ('felicidades, has ganado la partida');
+                            location.reload();
+                        }
+                        break
                     default: {
                         alert('Ha ocurrido un error en el servidor.');
                         event.preventDefault();
@@ -566,16 +592,16 @@
             }))
         })
         document.getElementById('boton-volver').addEventListener('click', function (event) {
-            cargarNuevaSeccion('container-inicio', 'container-tablero-barcos');
+            location.reload();
         })
 
         document.getElementById('boton-salir').addEventListener('click', function (event) {
             ws.send(JSON.stringify({ type: 'leave-party', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador') }));
-            cargarNuevaSeccion('container-inicio', 'container-juego');
+            location.reload();
         })
         document.getElementById('boton-salir-lobby').addEventListener('click', function (event) {
             ws.send(JSON.stringify({ type: 'leave-lobby', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador') }));
-            cargarNuevaSeccion('container-inicio', 'container-lobby');
+            location.reload();
         })
 
         document.getElementById('union-game').addEventListener('click', function () {

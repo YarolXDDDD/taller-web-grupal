@@ -90,6 +90,9 @@ function handleMessage(ws, message) {
         case 'getPlayers':
             getPlayers(ws,message.gameId);
             break;
+        case 'player-defeat':
+            handlePlayerDefeat(ws, message.gameId, message.playerName)
+            break;
         default:
             // Si el tipo de mensaje no es reconocido, se envía un mensaje de error al jugador.
             sendMessage(ws, { type: "error" , message: 'Mensaje desconocido'});
@@ -275,6 +278,22 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
 
 }
 
+function handlePlayerDefeat(ws, gameId, playerName) {
+
+    const game= games[gameId];
+    game.players = game.players.filter((player) => player.ws !== ws);
+    const gamePlayers = game.players.map(player => player.name);
+    if (game.players.length==1)
+    {
+        game.players.forEach((player) =>
+            sendMessage(player.ws, { type: 'victory', gameId, name:game.players[0].name, gamePlayers: gamePlayers}),
+        );
+    }
+    else
+    game.players.forEach((player) =>
+        sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
+    );
+}
 /**
  * Maneja la desconexión de un jugador.
  *
