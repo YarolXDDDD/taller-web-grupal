@@ -286,13 +286,15 @@ function handlePlayerDefeat(ws, gameId, playerName) {
     if (game.players.length==1)
     {
         game.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'victory', gameId, name:game.players[0].name, gamePlayers: gamePlayers}),
+            sendMessage(player.ws, { type: 'victory', gameId, name:playerName, gamePlayers: gamePlayers}),
         );
     }
     else
-    game.players.forEach((player) =>
-        sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
-    );
+    {
+        game.players.forEach((player) =>
+            sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
+        );
+    }
 }
 /**
  * Maneja la desconexión de un jugador.

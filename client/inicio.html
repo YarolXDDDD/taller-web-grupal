@@ -544,12 +544,13 @@
                         {
                             console.log(mensaje);
                             if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
-                            if (!verificarGamerOver())
+                            if (!verificarGameOver())
                             {
                                 modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                                 asignarClicks(mensaje.gamePlayers, mensaje.turno);
                             }
-                            
+                            else
+                                location.reload();
                         }
                         break;
                     case 'player-defeated':
