@@ -467,7 +467,7 @@
                 event.preventDefault();
             }
             else {
-                localStorage.setItem('cantidadJugadores', '8');
+                localStorage.setItem('cantidadJugadores', '5');
                 cargarNuevaSeccion('container-tablero-barcos', 'container-inicio', localStorage.getItem('cantidadJugadores'));
             }
         })
@@ -520,6 +520,8 @@
                         eliminarTablas(mensaje.name);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
                         recopilarEnemigos();
+                        modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
+                        asignarClicks(mensaje.gamePlayers, mensaje.turno);
                     }
                         break;
                     case 'playerLeft-lobby': {
@@ -530,12 +532,18 @@
                     case 'game-ended':
                         console.log(mensaje.message);
                         break;
+                    case 'tournament-ended':
+                        console.log(mensaje.message);
+                        break;
                     case 'playerLeft': {
                         eliminarTablas(mensaje.name);
                         alterarLobby(localStorage.getItem('cantidadJugadores'), localStorage.getItem('partidaActiva'), mensaje.gamePlayers);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
                     }
                         break;
+                    case 'playerLeft-tournament':{
+                        
+                    }
                     case 'attack': {
                         verificarAtaque(mensaje.casilla);
                     }
@@ -551,6 +559,14 @@
                             }
                             else
                                 location.reload();
+                        }
+                        break;
+                    case 'attack-done-espectador':
+                        {
+                            console.log(mensaje);
+                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
+                                modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
+                                asignarClicks(mensaje.gamePlayers, mensaje.turno);
                         }
                         break;
                     case 'player-defeated':

@@ -316,6 +316,7 @@ function verificarGameOver ()
     let todosLosHits = tabla.querySelectorAll('.hit');
     if (todosLosHits.length == 17)
     {
+        if (localStorage.getItem('cantidadJugadores')!=5)
         eliminarTablas (localStorage.getItem("nombreJugador"));
         alert("Has perdido :c");
         ws.send(JSON.stringify({ type: "player-defeat", gameId: localStorage.getItem("partidaActiva"), playerName: localStorage.getItem("nombreJugador")}));
@@ -504,6 +505,11 @@ function crearTableroPartida(jugadores, tableros, listaJugadores) {
                 }
             }
         }
+        let titulo= document.createElement('h2');
+        titulo.setAttribute('class','jugador');
+        titulo.setAttribute('id','p'+j);
+        j==jugadorActual ? titulo.innerText = 'Tu tablero ('+localStorage.getItem('nombreJugador')+')': titulo.innerText = listaJugadores[j-1];
+        tableroJuego.appendChild(titulo)
         tableroJuego.appendChild(tablero);
         tableros.appendChild(tableroJuego);
     }

@@ -2,6 +2,7 @@ import { WebSocketServer } from "ws";
 
 const wss = new WebSocketServer({host:'0.0.0.0', port: 8080 });
 const games = {};
+const torneos={};
 
 wss.on("connection", function connection(ws) {
     ws.on("message", function message(data) {
@@ -119,10 +120,10 @@ function sendMessage(ws, message) {
 function handleCreateGame(ws,playerName) {
     // Se genera un ID de juego único y se crea un nuevo juego con el jugador como único participante.
     const gameId = generateGameId();
-    games[gameId] = { id: gameId, players: [{ws,name:playerName}], started: false, turn: 0 };
+    games[gameId] = { id: gameId, players: [{ws,name:playerName, points:0}], started: false, turn: 0 };
 
     // Se envía un mensaje de confirmación al jugador.
-    sendMessage(ws, { type: 'gameCreated', gameId, players:[{ws,name:playerName}] });
+    sendMessage(ws, { type: 'gameCreated', gameId, players:[{ws,name:playerName, points:0}] });
 }
 
 function getPlayers(ws, gameId) {
@@ -162,7 +163,7 @@ function handleJoinGame(ws, gameId,playerName, cantidadJugadores) {
         sendMessage(ws, { type: 'error', message: 'el juego ya empezo' });
         return;
     }
-    game.players.push({ws,name:playerName});
+    game.players.push({ws,name:playerName,points:0});
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
             sendMessage(player.ws, { type: 'playerJoined', gameId, name:playerName, gamePlayers: gamePlayers });
@@ -226,9 +227,23 @@ function handleAttacked(ws, gameId, casilla, resultadoAtaque)
 {
     const game = games[gameId];
     const gamePlayers = game.players.map(player => player.name);
+    if (resultadoAtaque)
+    {   
+        if (game.turn==0)
+            game.players[game.players.length-1].points+=5;
+        else
+            game.players[game.turn-1].points+=5;
+    }
+        const torneo=torneos[gameId]
         game.players.forEach((player) => {
             sendMessage(player.ws, { type: 'attack-done', gameId, gamePlayers: gamePlayers, casilla:casilla, turno: game.turn, resultadoAtaque:resultadoAtaque });
         });
+        if (torneo)
+        {
+            torneo.players.forEach((player) => {
+                sendMessage(player.ws, { type: 'attack-done-espectador', gameId, gamePlayers: gamePlayers, casilla:casilla, turno: game.turn, resultadoAtaque:resultadoAtaque });
+            });
+        }
 }
 
 /**
@@ -244,37 +259,57 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
     }
 
     const game = games[gameId];
-    const gamePlayersOriginal = game.players.map(player => player.name);
+    const torneo=torneos[gameId];
 
     if (!game) {
         sendMessage(ws, { type: 'error', message: `No game found with ID "${gameId}"` });
         return;
     }
-
-    game.players = game.players.filter((player) => player.ws !== ws);
-    if (game.players.length === 0) {
-        delete games[gameId];
-        sendMessage(ws, { type: 'game-ended', gameId, message: 'Game ended'});
-    } else 
-    if (puntoDeSalida==='party') 
-    {
-        game.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayersOriginal}),
-        );
-    }
-    else if (puntoDeSalida==='lobby') 
-    {
+        if (torneo)
+        torneo.players = torneo.players.filter((player) => player.ws !== ws);
+        game.players = game.players.filter((player) => player.ws !== ws);
         const gamePlayers = game.players.map(player => player.name);
-        game.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'playerLeft-lobby', gameId, name:playerName, gamePlayers: gamePlayers }),
-        );
-    }
-    else{
-        const gamePlayers = game.players.map(player => player.name);
-        game.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'playerLeft', gameId, name:playerName, gamePlayers: gamePlayers}),
-        );
-    }
+        if (game.players.length === 0) {
+            delete games[gameId];
+            sendMessage(ws, { type: 'game-ended', gameId, message: 'Game ended'});
+        } 
+        if (torneo.players.length===0){
+            delete torneos[gameId];
+            sendMessage(ws, { type: 'tournament-ended', gameId, message: 'tournament ended'});
+        }
+        if (game.players.length === 1) {
+            if (!torneo || torneo.players.length === 0)
+                sendMessage(game.players[0].ws, { type: 'victory', gameId, message: 'Game ended'});
+            else
+            {
+                torneo.players.forEach((player) =>
+                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers}),
+                );
+            }
+        } else if (puntoDeSalida==='party') 
+        {
+            game.players.forEach((player) =>
+                sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers}),
+            );
+            if (torneo)
+            {
+                torneo.players.forEach((player) =>
+                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers}),
+                );
+            }
+        }
+        else if (puntoDeSalida==='lobby') 
+        {
+            game.players.forEach((player) =>
+                sendMessage(player.ws, { type: 'playerLeft-lobby', gameId, name:playerName, gamePlayers: gamePlayers }),
+            );
+        }
+        else{
+            const gamePlayers = game.players.map(player => player.name);
+            game.players.forEach((player) =>
+                sendMessage(player.ws, { type: 'playerLeft', gameId, name:playerName, gamePlayers: gamePlayers}),
+            );
+        }
 
 }
 
@@ -286,12 +321,50 @@ function handlePlayerDefeat(ws, gameId, playerName) {
     if (game.players.length==1)
     {
         game.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'victory', gameId, name:playerName, gamePlayers: gamePlayers}),
+                sendMessage(player.ws, { type: 'victory', gameId, name:playerName, gamePlayers: gamePlayers}),
+        );
+    }
+    else
+    {
+            game.players.forEach((player) =>
+                sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
+            );
+    }
+}
+
+function handlePlayerDefeatTournament(ws, gameId, playerName) {
+
+    const game= games[gameId];
+    if (!game) {
+        sendMessage(ws, { type: 'error', message: 'Game not found' });
+        return;
+    }
+    if (!game.started) {
+        sendMessage(ws, { type: 'error', message: 'Game not started' });
+        return;
+    }
+    const jugadorActual= game.players.find(player => player.ws === ws);
+    if (!torneos[gameId])
+        torneos[gameId] = { id: gameId, players: [{ws,name:playerName, points: jugadorActual.points }] };
+    else
+        torneos[gameId].players.push({ws, name:playerName, points:jugadorActual.points});
+    const torneo= torneos[gameId];
+    game.players = game.players.filter((player) => player.ws !== ws);
+    const gamePlayers = game.players.map(player => player.name);
+    if (game.players.length==1)
+    {
+        torneo.players.push({ws, name:game.players[0].name, points:game.players[0].points});
+        torneo.players.sort((a, b) => b.points - a.points);
+        torneo.players.forEach((player) =>
+            sendMessage(player.ws, { type: 'end-tournament', gameId, name:playerName, gamePlayers: torneo.players}),
         );
     }
     else
     {
         game.players.forEach((player) =>
+            sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
+        );
+        torneo.players.forEach((player) =>
             sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
         );
     }
