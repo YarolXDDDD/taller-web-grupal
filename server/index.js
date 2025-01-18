@@ -281,7 +281,7 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
             if (torneo.players.length===0)
                 delete torneos[gameId];
         }
-        if (game.players.length === 1) {
+        if (game.players.length === 1 && puntoDeSalida !='lobby') {
             if (!torneo || torneo.players.length === 0)
                 sendMessage(game.players[0].ws, { type: 'victory', gameId, message: 'Game ended'});
             else
