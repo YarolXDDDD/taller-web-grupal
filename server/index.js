@@ -284,18 +284,18 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
             else
             {
                 torneo.players.forEach((player) =>
-                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers}),
+                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
                 );
             }
         } else if (puntoDeSalida==='party') 
         {
             game.players.forEach((player) =>
-                sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers}),
+                sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
             );
             if (torneo)
             {
                 torneo.players.forEach((player) =>
-                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers}),
+                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
                 );
             }
         }
