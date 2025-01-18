@@ -13,6 +13,7 @@ wss.on("connection", function connection(ws) {
         catch(error)
         {
             console.log('error al parsear el mensaje');
+            console.log(error);
         }
     });
     ws.on('close', () => {
@@ -273,9 +274,9 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
             delete games[gameId];
             sendMessage(ws, { type: 'game-ended', gameId, message: 'Game ended'});
         } 
-        if (torneo.players.length===0){
-            delete torneos[gameId];
-            sendMessage(ws, { type: 'tournament-ended', gameId, message: 'tournament ended'});
+        if (torneo){
+            if (torneo.players.length===0)
+                delete torneos[gameId];
         }
         if (game.players.length === 1) {
             if (!torneo || torneo.players.length === 0)
@@ -383,6 +384,12 @@ function handleDisconnect(ws) {
             console.log('Jugador desconectado:', playerName); // Verifica el nombre
             handleLeaveGame(ws, gameId, playerName, 'disconnect');
             break;
+        }
+        else{
+            const torneo=torneos[gameId];
+            const torneoPlayer= torneo.players.find(player => player.ws === ws);
+            const playerTournamentName= torneoPlayer.name;
+            handleLeaveGame(ws, gameId, playerTournamentName, 'disconnect');
         }
     }
 }
