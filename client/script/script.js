@@ -317,10 +317,12 @@ function verificarGameOver ()
     if (todosLosHits.length == 17)
     {
         if (localStorage.getItem('cantidadJugadores')!=5)
-        eliminarTablas (localStorage.getItem("nombreJugador"));
-        alert("Has perdido :c");
-        ws.send(JSON.stringify({ type: "player-defeat", gameId: localStorage.getItem("partidaActiva"), playerName: localStorage.getItem("nombreJugador")}));
-        return true;
+        {
+            eliminarTablas (localStorage.getItem("nombreJugador"));
+            alert("Has perdido :c");
+            ws.send(JSON.stringify({ type: "player-defeat", gameId: localStorage.getItem("partidaActiva"), playerName: localStorage.getItem("nombreJugador")}));
+            return true;
+        }
     }
     return false;
 }

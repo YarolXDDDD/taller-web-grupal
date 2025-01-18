@@ -387,9 +387,12 @@ function handleDisconnect(ws) {
         }
         else{
             const torneo=torneos[gameId];
-            const torneoPlayer= torneo.players.find(player => player.ws === ws);
-            const playerTournamentName= torneoPlayer.name;
-            handleLeaveGame(ws, gameId, playerTournamentName, 'disconnect');
+            if (torneo)
+            {
+                const torneoPlayer= torneo.players.find(player => player.ws === ws);
+                const playerTournamentName= torneoPlayer.name;
+                handleLeaveGame(ws, gameId, playerTournamentName, 'disconnect');
+            }
         }
     }
 }
