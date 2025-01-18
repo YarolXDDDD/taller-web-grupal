@@ -325,6 +325,7 @@ main {
 
 .tablero-juego{
     padding: 50px;
+    padding-top: 0px;
     background-color: #FFFFFF;
     border-radius: 10px;
 }

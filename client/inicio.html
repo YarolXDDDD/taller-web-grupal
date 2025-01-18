@@ -332,7 +332,8 @@
     <div class="main-container" id="container-lobby">
         <header>
             <div>
-                <h1>Lobby</h1>
+                <h1 id="titulo-lobby">Lobby</h1>
+                <h1 id="titulo-leaderboard">Leaderboard</h1>
             </div>
             <h2 id="etapa">Octavos</h2>
         </header>
@@ -563,7 +564,6 @@
                             console.log(mensaje);
                             if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
                                 modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
-                                asignarClicks(mensaje.gamePlayers, mensaje.turno);
                         }
                         break;
                     case 'player-defeated':

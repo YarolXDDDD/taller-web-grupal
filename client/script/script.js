@@ -184,56 +184,123 @@ function ocultarSeccion(id) {
     document.getElementById(id).style.display = "none";
 }
 
-function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores ){
+// function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores ){
+//     document.getElementById(idNuevo).style.display = "block";
+//     ocultarSeccion(idViejo);
+//     let tablerosElement = document.getElementById('tableros-creacion');
+//     let tablerosJugar= document.getElementById('tableros') // Obtener el elemento 'tableros'
+
+//     if (idNuevo==='container-tablero-barcos') {
+//         // Valores predeterminados para la fase de colocación
+//         crearTableroCreacion(1, tablerosElement, [localStorage.getItem('nombreJugador')]); // Un solo jugador y su nombre
+//     }
+
+//     if (idNuevo==='container-juego') {
+//         crearTableroPartida(cantidadJugadores, tablerosJugar, listaJugadores); // Usar los valores correctos
+//         if (cantidadJugadores!=8) {
+//             document.getElementById('modo-juego').innerText='Partida de '+cantidadJugadores+' Jugadores';
+//         } else {
+//             document.getElementById('modo-juego').innerText='Modo Torneo';
+//         }
+//         let enemigos='';
+//         for (let j=0;j<listaJugadores.length;j++) {
+//             if (listaJugadores[j]!=localStorage.getItem('nombreJugador')) {
+//                 enemigos+=listaJugadores[j];
+//                 if (j!=listaJugadores.length-1) {
+//                     enemigos+=',';
+//                 } else {
+//                     enemigos+='.';
+//                 }
+//             }
+//         }
+//         document.getElementById('encabezado-enemigo').innerText='Tus enemigos seran:'+ enemigos;
+//     }
+//     if (idViejo==='container-tablero-barcos')
+//     {
+//         const tablero= document.querySelector('.tablero-juego');
+//         if (tablero) tablero.remove();
+//     }
+//     if (idViejo==='container-lobby' || idViejo==='container-juego')
+//     {
+//         for (let i=1;i<=cantidadJugadores;i++)
+//             {
+//                 let jugador = document.getElementById('jugador'+i);
+//                 jugador.innerText="";
+//             }
+//     }
+//     if (idViejo==='container-juego') 
+//     {
+//         document.getElementById('tableros').innerHTML='';
+//         document.getElementById('anuncio').innerHTML='';
+//     }
+// }
+
+function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores, puntajes = null) {
     document.getElementById(idNuevo).style.display = "block";
     ocultarSeccion(idViejo);
     let tablerosElement = document.getElementById('tableros-creacion');
-    let tablerosJugar= document.getElementById('tableros') // Obtener el elemento 'tableros'
+    let tablerosJugar = document.getElementById('tableros');
 
-    if (idNuevo==='container-tablero-barcos') {
-        // Valores predeterminados para la fase de colocación
-        crearTableroCreacion(1, tablerosElement, [localStorage.getItem('nombreJugador')]); // Un solo jugador y su nombre
+    if (idNuevo === 'container-tablero-barcos') {
+        crearTableroCreacion(1, tablerosElement, [localStorage.getItem('nombreJugador')]);
     }
 
-    if (idNuevo==='container-juego') {
-        crearTableroPartida(cantidadJugadores, tablerosJugar, listaJugadores); // Usar los valores correctos
-        if (cantidadJugadores!=8) {
-            document.getElementById('modo-juego').innerText='Partida de '+cantidadJugadores+' Jugadores';
+    if (idNuevo === 'container-juego') {
+        crearTableroPartida(cantidadJugadores, tablerosJugar, listaJugadores);
+        if (cantidadJugadores != 8) {
+            document.getElementById('modo-juego').innerText = 'Partida de ' + cantidadJugadores + ' Jugadores';
         } else {
-            document.getElementById('modo-juego').innerText='Modo Torneo';
+            document.getElementById('modo-juego').innerText = 'Modo Torneo';
         }
-        let enemigos='';
-        for (let j=0;j<listaJugadores.length;j++) {
-            if (listaJugadores[j]!=localStorage.getItem('nombreJugador')) {
-                enemigos+=listaJugadores[j];
-                if (j!=listaJugadores.length-1) {
-                    enemigos+=',';
+        let enemigos = '';
+        for (let j = 0; j < listaJugadores.length; j++) {
+            if (listaJugadores[j] != localStorage.getItem('nombreJugador')) {
+                enemigos += listaJugadores[j];
+                if (j != listaJugadores.length - 1) {
+                    enemigos += ',';
                 } else {
-                    enemigos+='.';
+                    enemigos += '.';
                 }
             }
         }
-        document.getElementById('encabezado-enemigo').innerText='Tus enemigos seran:'+ enemigos;
+        document.getElementById('encabezado-enemigo').innerText = 'Tus enemigos seran:' + enemigos;
     }
-    if (idViejo==='container-tablero-barcos')
-    {
-        const tablero= document.querySelector('.tablero-juego');
+
+    // Código para mostrar el leaderboard al volver al lobby
+    if (idNuevo === 'container-lobby' && puntajes) { // Verifica que 'puntajes' exista
+        mostrarLeaderboard(cantidadJugadores, listaJugadores, puntajes);
+    }
+
+    if (idViejo === 'container-tablero-barcos') {
+        const tablero = document.querySelector('.tablero-juego');
         if (tablero) tablero.remove();
     }
-    if (idViejo==='container-lobby' || idViejo==='container-juego')
-    {
-        for (let i=1;i<=cantidadJugadores;i++)
-            {
-                let jugador = document.getElementById('jugador'+i);
-                jugador.innerText="";
-            }
+    if (idViejo === 'container-lobby' || idViejo === 'container-juego') {
+        for (let i = 1; i <= cantidadJugadores; i++) {
+            let jugador = document.getElementById('jugador' + i);
+            jugador.innerText = "";
+        }
     }
-    if (idViejo==='container-juego') 
-    {
-        document.getElementById('tableros').innerHTML='';
-        document.getElementById('anuncio').innerHTML='';
+    if (idViejo === 'container-juego') {
+        document.getElementById('tableros').innerHTML = '';
+        document.getElementById('anuncio').innerHTML = '';
     }
 }
+
+function mostrarLeaderboard(cantidadJugadores, listaJugadores, puntajes) {
+    for (let i = 0; i < cantidadJugadores; i++) {
+        let jugador = document.getElementById('jugador' + (i + 1));
+        if(puntajes[listaJugadores[i]]) {
+            jugador.innerText = listaJugadores[i] + " - " + puntajes[listaJugadores[i]];
+        }
+        else{
+            jugador.innerText = listaJugadores[i] + " - 0";
+        }
+    }
+}
+
+
+
 
 function modificarAnuncio (anuncio)
 {
@@ -316,12 +383,17 @@ function verificarGameOver ()
     let todosLosHits = tabla.querySelectorAll('.hit');
     if (todosLosHits.length == 17)
     {
-        if (localStorage.getItem('cantidadJugadores')!=5)
+        if (localStorage.getItem('cantidadJugadores')<5)
         {
             eliminarTablas (localStorage.getItem("nombreJugador"));
             alert("Has perdido :c");
             ws.send(JSON.stringify({ type: "player-defeat", gameId: localStorage.getItem("partidaActiva"), playerName: localStorage.getItem("nombreJugador")}));
             return true;
+        }
+        else
+        {
+            ws.send(JSON.stringify({ type: "player-defeat-tournament", gameId: localStorage.getItem("partidaActiva"), playerName: localStorage.getItem("nombreJugador")}));
+            return false;
         }
     }
     return false;
