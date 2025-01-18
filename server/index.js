@@ -295,7 +295,7 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
             if (game.turn < game.players.length - 1) 
             game.turn++;
             else 
-            game.turn = 0;a
+            game.turn = 0;
             game.players.forEach((player) =>
                 sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
             );
