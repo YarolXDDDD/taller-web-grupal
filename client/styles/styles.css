@@ -648,7 +648,7 @@ main {
     cursor: pointer;
 }
 
-#boosters ul li:hover{
+#boosters ul li:hover, .seleccionado{
     color:white;
     background-color: #68BAFA;
     border: 1px solid;

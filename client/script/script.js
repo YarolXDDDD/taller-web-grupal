@@ -13,6 +13,9 @@ let cantidadBarcos = { // Cantidad de barcos permitidos por tipo
     destructor: 1
 };
 
+let powerUpActivo = null;
+let puntaje = 0;
+
 function crearTablero (tableros)
 {
     let j=1;
@@ -235,7 +238,7 @@ function ocultarSeccion(id) {
 //     }
 // }
 
-function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores, puntajes = null) {
+function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores, puntajes ) {
     document.getElementById(idNuevo).style.display = "block";
     ocultarSeccion(idViejo);
     let tablerosElement = document.getElementById('tableros-creacion');
@@ -247,7 +250,7 @@ function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores,
 
     if (idNuevo === 'container-juego') {
         crearTableroPartida(cantidadJugadores, tablerosJugar, listaJugadores);
-        if (cantidadJugadores != 8) {
+        if (cantidadJugadores <=4) {
             document.getElementById('modo-juego').innerText = 'Partida de ' + cantidadJugadores + ' Jugadores';
         } else {
             document.getElementById('modo-juego').innerText = 'Modo Torneo';
@@ -267,8 +270,10 @@ function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores,
     }
 
     // Código para mostrar el leaderboard al volver al lobby
-    if (idNuevo === 'container-lobby' && puntajes) { // Verifica que 'puntajes' exista
-        mostrarLeaderboard(cantidadJugadores, listaJugadores, puntajes);
+    if (idNuevo === 'container-lobby' && idViejo=='container-juego') { // Verifica que 'puntajes' exista
+        mostrarLeaderboard(listaJugadores.length, listaJugadores, puntajes);
+        document.getElementById('titulo-lobby').innerText="";
+        document.getElementById('titulo-leaderboard').innerText='Leaderboard';
     }
 
     if (idViejo === 'container-tablero-barcos') {
@@ -285,6 +290,8 @@ function cargarNuevaSeccion(idNuevo, idViejo, cantidadJugadores, listaJugadores,
         document.getElementById('tableros').innerHTML = '';
         document.getElementById('anuncio').innerHTML = '';
     }
+    if (idNuevo==='container-lobby')
+        document.getElementById('titulo-leaderboard').innerText="";
 }
 
 function mostrarLeaderboard(cantidadJugadores, listaJugadores, puntajes) {
@@ -299,8 +306,49 @@ function mostrarLeaderboard(cantidadJugadores, listaJugadores, puntajes) {
     }
 }
 
+function verificarPowerUp () //Es para quien compre un powerUp para revisar cual tiene para después "prepararlo" y posteriormente enviar la solicitud al servidor
+{
+    switch (powerUpActivo) {
+        case "mina-marina":
+        {
+            powerUpActivo = null;
+            prepararPowerUp ("mina-marina");
+            ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
+        }
+        break;
+        default:{
+            ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
+        }
+    }
+}
 
+function randomizador (min, max)
+{
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+function prepararPowerUp (powerUp) //Es para quien compra el powerUp
+{
+    switch (powerUp) {
+        case "mina-marina":
+        {
+            let tablaJugador = document.getElementById(localStorage.getItem('nombreJugador'));
+            let tabla = tablaJugador.querySelector(".tablero");
+            let casillasDisponibles = tabla.querySelectorAll(".table-cell:not(.hit, .miss, .barco)");
+            let casilla = casillasDisponibles[randomizador(0, casillasDisponibles.length-1)];
+            let mina = document.createElement("div");
+            mina.classList.add("mina-marina");
+            mina.innerHTML = "💣";
+            casilla.appendChild(mina);
+        }
+        break;
+    }
+}
+
+function activarPowerUp (powerUp) //Es para quien compra el powerUp o si alguien se encuentra con el power-Up al intentar atacar
+{
+
+}
 
 function modificarAnuncio (anuncio)
 {
@@ -330,6 +378,7 @@ function alterarTablero(casilla, resultadoAtaque)
     {
         if (resultadoAtaque)
         {   
+            puntaje += 5;
             console.log('estoy marcando como atacada la casilla:'+casilla);
             let golpe = document.createElement("div");
             golpe.classList.add("hit");
@@ -351,6 +400,11 @@ function verificarAtaque(casilla){
         {
             console.log ("Barco encontrado");
             ws.send (JSON.stringify({ type: 'player-attacked', gameId:localStorage.getItem('partidaActiva'), casilla: casilla, hit: true}));
+        }
+        else if(casillaAtacada.querySelector(".mina"))
+        {
+            console.log ("mina encontrada");
+            activarPowerUp("mina-marina");
         }
         else 
         {
@@ -403,7 +457,7 @@ function manejarAtaque(event){
     const casillaAtacada = event.target.id;
     const jugadorAtacado= event.target.closest('.tablero-juego').id;
     if (!verificarPrevioAtaque(casillaAtacada)) alert ("La casilla ya ha sido atacada, has perdido tu turno");
-    ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
+    verificarPowerUp();
 }
 
 function asignarClicks(gamePlayers, turno)
@@ -434,6 +488,7 @@ function eliminarTablas(playerOut){
 let estadoInicialSelector = []; // Variable global para guardar el estado inicial
 
 function crearTableroCreacion(jugadores, tableros, listaJugadores) {
+    puntaje = 0;
     const jugadorActual = listaJugadores.indexOf(localStorage.getItem('nombreJugador')) + 1;
 
     const selectorBarco = document.getElementById('selector-barco');

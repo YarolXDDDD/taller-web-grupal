@@ -332,8 +332,8 @@
     <div class="main-container" id="container-lobby">
         <header>
             <div>
-                <h1 id="titulo-lobby">Lobby</h1>
-                <h1 id="titulo-leaderboard">Leaderboard</h1>
+                <h2 id="titulo-lobby">Lobby</h2>
+                <h2 id="titulo-leaderboard">Leaderboard</h2>
             </div>
             <h2 id="etapa">Octavos</h2>
         </header>
@@ -533,8 +533,10 @@
                     case 'game-ended':
                         console.log(mensaje.message);
                         break;
-                    case 'end-tournament':
+                    case 'end-tournament':{
+                        cargarNuevaSeccion('container-lobby','container-juego',localStorage.getItem('cantidadJugadores'),mensaje.gamePlayers,mensaje.points);
                         console.log(mensaje.message);
+                    }
                         break;
                     case 'playerLeft': {
                         eliminarTablas(mensaje.name);
@@ -598,6 +600,27 @@
             ws.send(JSON.stringify({ type: 'create', playerName: localStorage.getItem('nombreJugador') }))
         })
 
+        let contenedorBoosters = document.getElementById("boosters");
+        let boosters = contenedorBoosters.querySelectorAll("li");
+        let seleccionado = null;
+        boosters.forEach((booster) => 
+        {
+            booster.addEventListener('click', () => 
+            {
+                if (seleccionado != booster && seleccionado != null) seleccionado.classList.remove("seleccionado");
+                if (seleccionado === booster && seleccionado != null)
+                {
+                    seleccionado.classList.remove("seleccionado");
+                    seleccionado = null;
+                }
+                else
+                {
+                    booster.classList.add("seleccionado");
+                    seleccionado = booster;
+                }
+            });
+        });
+
         document.getElementById('listo').addEventListener('click', () => {
             ws.send(JSON.stringify({
                 type: 'start',
@@ -610,7 +633,11 @@
         })
 
         document.getElementById('boton-salir').addEventListener('click', function (event) {
+            const tablero= document.getElementById(localStorage.getItem('nombreJugador'));
+            if (tablero)
             ws.send(JSON.stringify({ type: 'leave-party', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador') }));
+            else
+            ws.send(JSON.stringify({ type: 'leave-tournament', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador') }));
             location.reload();
         })
         document.getElementById('boton-salir-lobby').addEventListener('click', function (event) {

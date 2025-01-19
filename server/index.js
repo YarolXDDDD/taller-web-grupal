@@ -89,6 +89,10 @@ function handleMessage(ws, message) {
                 // Para manejar el abandono de un juego, se necesita la conexión WebSocket del jugador y el ID del juego.
             handleLeaveGame(ws, message.gameId,message.playerName,'lobby');
             break;
+        case 'leave-tournament':
+                // Para manejar el abandono de un juego, se necesita la conexión WebSocket del jugador y el ID del juego.
+            handleLeaveGame(ws, message.gameId,message.playerName,'tournament');
+            break;
         case 'getPlayers':
             getPlayers(ws,message.gameId);
             break;
@@ -312,6 +316,18 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
                 sendMessage(player.ws, { type: 'playerLeft-lobby', gameId, name:playerName, gamePlayers: gamePlayers }),
             );
         }
+        else if (puntoDeSalida==='tournament')
+        {
+            game.players.forEach((player) =>
+                sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers }),
+            );
+            if (torneo)
+            {
+                torneo.players.forEach((player) =>
+                    sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
+                );
+            }
+        }
         else{
             const gamePlayers = game.players.map(player => player.name);
             game.players.forEach((player) =>
@@ -362,9 +378,12 @@ function handlePlayerDefeatTournament(ws, gameId, playerName) {
     if (game.players.length==1)
     {
         torneo.players.push({ws, name:game.players[0].name, points:game.players[0].points});
+        delete games[gameId];
         torneo.players.sort((a, b) => b.points - a.points);
+        const gamePlayersTournament = torneo.players.map(player => player.name);
+        const playersPoints = torneo.players.map(player => player.points);
         torneo.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'end-tournament', gameId, name:playerName, gamePlayers: torneo.players}),
+            sendMessage(player.ws, { type: 'end-tournament', gameId, name:playerName, gamePlayers: gamePlayersTournament, points: playersPoints}),
         );
     }
     else
