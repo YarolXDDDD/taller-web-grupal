@@ -552,7 +552,7 @@
                     case 'attack-done':
                         {
                             console.log(mensaje);
-                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
+                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque,mensaje.gamePlayers);
                             if (!verificarGameOver())
                             {
                                 modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
@@ -565,7 +565,7 @@
                     case 'attack-done-espectador':
                         {
                             console.log(mensaje);
-                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque);
+                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque,mensaje.gamePlayers);
                                 modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                         }
                         break;
@@ -588,6 +588,11 @@
                         {
                             modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                             asignarClicks(mensaje.gamePlayers, mensaje.turno);
+                        }
+                        break;
+                    case 'ship-destroyed':
+                        {
+                            alert('le destruyeron el barco '+mensaje.tipoBarco+' al jugador '+mensaje.name);
                         }
                         break;
                     default: {
