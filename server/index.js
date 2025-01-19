@@ -319,7 +319,7 @@ function handleLeaveGame(ws, gameId,playerName, puntoDeSalida) {
         else if (puntoDeSalida==='tournament')
         {
             game.players.forEach((player) =>
-                sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers }),
+                sendMessage(player.ws, { type: 'playerLeft-party', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn }),
             );
             if (torneo)
             {
