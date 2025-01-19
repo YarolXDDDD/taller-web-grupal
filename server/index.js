@@ -388,6 +388,8 @@ function handlePlayerDefeatTournament(ws, gameId, playerName) {
     }
     else
     {
+        if (game.turn=game.players.length)
+            game.turn=0;
         game.players.forEach((player) =>
             sendMessage(player.ws, { type: 'player-defeat', gameId, name:playerName, gamePlayers: gamePlayers, turno: game.turn}),
         );
@@ -404,6 +406,7 @@ function handlePlayerDefeatTournament(ws, gameId, playerName) {
 function handleDisconnect(ws) {
     for (const gameId in games) {
         const game = games[gameId];
+        const torneo=torneos[gameId];
         const player = game.players.find(player => player.ws === ws);
         if (player) {
             const playerName = player.name;
@@ -411,14 +414,11 @@ function handleDisconnect(ws) {
             handleLeaveGame(ws, gameId, playerName, 'disconnect');
             break;
         }
-        else{
-            const torneo=torneos[gameId];
-            if (torneo)
-            {
+        else  if (torneo && torneo.players.find(player => player.ws === ws) ){
                 const torneoPlayer= torneo.players.find(player => player.ws === ws);
                 const playerTournamentName= torneoPlayer.name;
                 handleLeaveGame(ws, gameId, playerTournamentName, 'disconnect');
-            }
+                break;
         }
     }
 }

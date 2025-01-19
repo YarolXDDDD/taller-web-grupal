@@ -568,7 +568,7 @@
                                 modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                         }
                         break;
-                    case 'player-defeated':
+                    case 'player-defeat':
                         {
                             eliminarTablas(mensaje.name);
                             alert('El jugador ' + mensaje.name + ' ha sido derrotado.');
@@ -587,6 +587,7 @@
                         alert('Ha ocurrido un error en el servidor.');
                         event.preventDefault();
                     }
+                    break;
                 }
             }
             catch (error) {

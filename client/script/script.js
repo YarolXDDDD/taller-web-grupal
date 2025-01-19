@@ -157,7 +157,7 @@ function crearTablero (tableros)
 
 function alterarLobby(cantidadJugadores, gameId,nombresJugadores){
     let titulo= document.getElementById('etapa');
-    if (cantidadJugadores!=8)
+    if (cantidadJugadores<=4)
         titulo.innerHTML='Modo de Juego: Partida de '+cantidadJugadores+' Jugadores </br>ID: '+gameId;
     else
         titulo.innerHTML='Modo de Juego: Torneo </br>ID: '+gameId;
@@ -306,7 +306,7 @@ function mostrarLeaderboard(cantidadJugadores, listaJugadores, puntajes) {
     }
 }
 
-function verificarPowerUp () //Es para quien compre un powerUp para revisar cual tiene para después "prepararlo" y posteriormente enviar la solicitud al servidor
+function verificarPowerUp (casillaAtacada,jugadorAtacado) //Es para quien compre un powerUp para revisar cual tiene para después "prepararlo" y posteriormente enviar la solicitud al servidor
 {
     switch (powerUpActivo) {
         case "mina-marina":
@@ -457,7 +457,7 @@ function manejarAtaque(event){
     const casillaAtacada = event.target.id;
     const jugadorAtacado= event.target.closest('.tablero-juego').id;
     if (!verificarPrevioAtaque(casillaAtacada)) alert ("La casilla ya ha sido atacada, has perdido tu turno");
-    verificarPowerUp();
+    verificarPowerUp(casillaAtacada,jugadorAtacado);
 }
 
 function asignarClicks(gamePlayers, turno)
