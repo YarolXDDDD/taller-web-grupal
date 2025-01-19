@@ -432,6 +432,7 @@ function handleShipDestroyed(ws,gameId,playerName,tipoBarco)
 {
     const game=games[gameId];
     const torneo=torneos[gameId];
+    const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) =>
         sendMessage(player.ws, { type: 'ship-destroyed', gameId, name:playerName, gamePlayers: gamePlayers, tipoBarco:tipoBarco}),
     );
