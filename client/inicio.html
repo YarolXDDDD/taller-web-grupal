@@ -370,13 +370,13 @@
                         <tr>
                             <td id="jugador8"></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td id="jugador9"></td>
                         </tr>
                         <tr>
                             <td id="jugador10"></td>
                         </tr>
-                        <!-- <tr>
+                        <tr>
                             <td id="jugador11"></td>
                         </tr>
                         <tr>
@@ -521,6 +521,7 @@
                         eliminarTablas(mensaje.name);
                         alert('El jugador ' + mensaje.name + ' ha abandonado la partida.');
                         recopilarEnemigos();
+                        modificarEnemigos(mensaje.gamePlayers);
                         modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                         asignarClicks(mensaje.gamePlayers, mensaje.turno);
                     }
@@ -535,7 +536,7 @@
                         break;
                     case 'end-tournament':{
                         cargarNuevaSeccion('container-lobby','container-juego',localStorage.getItem('cantidadJugadores'),mensaje.gamePlayers,mensaje.points);
-                        console.log(mensaje.message);
+                        console.log(mensaje);
                     }
                         break;
                     case 'playerLeft': {
@@ -583,6 +584,12 @@
                             location.reload();
                         }
                         break
+                    case 'turn-passed':
+                        {
+                            modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
+                            asignarClicks(mensaje.gamePlayers, mensaje.turno);
+                        }
+                        break;
                     default: {
                         alert('Ha ocurrido un error en el servidor.');
                         event.preventDefault();
