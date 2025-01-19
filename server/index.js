@@ -377,7 +377,7 @@ function handlePlayerDefeatTournament(ws, gameId, playerName) {
     const gamePlayers = game.players.map(player => player.name);
     if (game.players.length==1)
     {
-        torneo.players.push({ws, name:game.players[0].name, points:game.players[0].points});
+        torneo.players.push({ws:game.players[0].ws, name:game.players[0].name, points:game.players[0].points});
         delete games[gameId];
         torneo.players.sort((a, b) => b.points - a.points);
         const gamePlayersTournament = torneo.players.map(player => player.name);
@@ -385,6 +385,7 @@ function handlePlayerDefeatTournament(ws, gameId, playerName) {
         torneo.players.forEach((player) =>
             sendMessage(player.ws, { type: 'end-tournament', gameId, name:playerName, gamePlayers: gamePlayersTournament, points: playersPoints}),
         );
+        delete torneos[gameId];
     }
     else
     {
