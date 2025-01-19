@@ -242,9 +242,10 @@ function handleAttacked(ws, gameId, casilla, resultadoAtaque)
         else
             game.players[game.turn-1].points+=5;
     }
-        const torneo=torneos[gameId]
+        const torneo=torneos[gameId];
+        const playersPoints = game.players.map(player => player.points);
         game.players.forEach((player) => {
-            sendMessage(player.ws, { type: 'attack-done', gameId, gamePlayers: gamePlayers, casilla:casilla, turno: game.turn, resultadoAtaque:resultadoAtaque });
+            sendMessage(player.ws, { type: 'attack-done', gameId, gamePlayers: gamePlayers, casilla:casilla, turno: game.turn, resultadoAtaque:resultadoAtaque, points:playersPoints });
         });
         if (torneo)
         {
