@@ -174,12 +174,8 @@
                 <h2>Potenciadores</h2>
                 <p id="puntaje">Tienes 0 puntos</p>
                 <ul>
-                    <li id="sonar">Sonar 🔊</li>
-                    <li id="avion-ataque">Avion de Ataque 🛫</li>
+                    <li id="sonar">Sonar 🔊 - 15 puntos</li>
                     <li id="mina-marina">Mina Marina 💣 - 10 puntos</li>
-                    <li id="escudo">Escudo Defensivo 🛡️</li>
-                    <li id="misil-crucero">Misil Crucero 💥</li>
-                    <li id="reparacion">Reparación Rápida 🔨</li>
                     <li id="pem">Ataque PEM 🔌 - 25 puntos</li>
                 </ul>
                 <button id="compra-potenciador">Comprar</button>
@@ -306,7 +302,7 @@
                 event.preventDefault();
             }
             else {
-                localStorage.setItem('cantidadJugadores', '5');
+                localStorage.setItem('cantidadJugadores', '8');
                 cargarNuevaSeccion('container-tablero-barcos', 'container-inicio', localStorage.getItem('cantidadJugadores'));
             }
         })
@@ -399,12 +395,18 @@
                             location.reload();
                     }
                     break;
+                    case 'sonar-answer':
+                    {
+                        alert ('🗣️🔥 La ubicación de un trozo de barco de '+mensaje.name+' está en la posición '+mensaje.casilla);
+                    }
+                    break;
                     case 'mina-marina-espectador':
                     {
                         let casillaAtacada = mensaje.atacado;
                         let casillaPropia = mensaje.propia;
                         alterarTablero(casillaAtacada,false,mensaje.gamePlayers);
                         alterarTablero(casillaPropia,mensaje.hitPropio,mensaje.gamePlayers);
+                        modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                         alert ('El jugador '+mensaje.jugadorAtacante+' ataco la mina del jugador '+mensaje.jugadorAtacado);
                     }
                     break;
@@ -466,11 +468,14 @@
                         break;
                     case 'PEM-attacked':
                         {
-                            empDuration+=3;
+                            empDuration+=4;
                             let boton=document.getElementById('compra-potenciador');
                             boton.disabled=true;
                             alert('has sufrido un ataque PEM del jugador: '+mensaje.name+' no podras usar power-Ups durante '+empDuration+' turnos');
                         }
+                        break;
+                    case 'sonar-active':
+                            mandarRespuestaSonar(playerName, mensaje.name);
                         break;
                     default: {
                         alert('Ha ocurrido un error en el servidor.');

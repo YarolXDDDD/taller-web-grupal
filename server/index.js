@@ -117,6 +117,12 @@ function handleMessage(ws, message) {
         case 'PEM-attack':
             handlePEMAttack(ws,message.gameId,message.jugadorAtacado,message.playerName);
             break;
+        case 'sonar':
+            handleSonar(ws,gameId,message.jugadorAtacado,message.playerName);
+            break;
+        case 'sonar-revealed':
+            handleSonarRevealed(ws,gameId,message.playerName,message.casillaRevelada,message.jugadorAtacante);
+            break;
         default:
             // Si el tipo de mensaje no es reconocido, se envía un mensaje de error al jugador.
             sendMessage(ws, { type: "error" , message: 'Mensaje desconocido'});
@@ -485,6 +491,24 @@ function handlePEMAttack(ws,gameId,jugadorAtacado,playerName)
     game.players.forEach((player) => {
         if (player.name===jugadorAtacado)
         sendMessage(player.ws, { type: 'PEM-attacked', gameId, name:playerName});
+    });
+}
+function handleSonar(ws, gameId,jugadorAtacado,playerName)
+{
+    const game=games[gameId];
+    const gamePlayers = game.players.map(player => player.name);
+    game.players.forEach((player) => {
+        if (player.name===jugadorAtacado)
+        sendMessage(player.ws, { type: 'sonar-active', gameId, name:playerName});
+    });
+}
+
+function handleSonarRevealed(ws,gameId,playerName,casillaRevelada,jugadorAtacante)
+{
+    const game=games[gameId];
+    game.players.forEach((player) => {
+        if (player.name===jugadorAtacante)
+        sendMessage(player.ws, { type: 'sonar-answer', gameId, name:playerName, casilla:casillaRevelada});
     });
 }
 /**

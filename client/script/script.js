@@ -14,7 +14,7 @@ let cantidadBarcos = { // Cantidad de barcos permitidos por tipo
 };
 
 let powerUpActivo = null;
-let puntaje = 100;
+let puntaje = 0;
 let tuTurno = false;
 let empCooldown=0;
 let empDuration=0;
@@ -211,6 +211,11 @@ function verificarPowerUp (casillaAtacada,jugadorAtacado) //Es para quien compre
                 ws.send(JSON.stringify({ type: 'PEM-attack', gameId: localStorage.getItem('partidaActiva'), jugadorAtacado:jugadorAtacado, playerName: localStorage.getItem('nombreJugador')}));
         }
         break;
+        case 'sonar':{
+            powerUpActivo = null;
+            ws.send(JSON.stringify({ type: 'sonar', gameId: localStorage.getItem('partidaActiva'), jugadorAtacado:jugadorAtacado, playerName: localStorage.getItem('nombreJugador')}));
+        }
+        break;
         default:{
             ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
         }
@@ -246,10 +251,26 @@ function comprarPowerUp (seleccionado)
                 else
                     alert ('No tienes puntos suficientes para comprar este potenciador o aún está en cooldown');
             }
+            break;
+            case 'Sonar 🔊 - 15 puntos':
+            {
+                let submarino = document.querySelectorAll('.barco-submarino.hit');
+                if (puntaje >= 15 && submarino.length < 3 && submarino != null)
+                {
+                    puntaje -= 15;
+                    powerUpActivo = "sonar";
+                    alert ('Haz comprado el powerUp Sonar 🔊, al darle click al tablero del rival lo siguiente que recibirás son las coordenadas de una de las posiciones de su barco');
+                }
+                else
+                    alert ('No tienes puntos suficientes para comprar este potenciador o tu submarino ha sido hundido');
+            }
+            break;
             default:{
                 powerUpActivo = null;
             }
         }
+        let puntajeText = document.getElementById('puntaje');
+        puntajeText.textContent = puntaje+' puntos';
     }
     else
         alert('No puedes comprar potenciadores si no es tu turno');
@@ -416,8 +437,8 @@ function verificarGameOver ()
 function manejarAtaque(event){
     const casillaAtacada = event.target.id;
     const jugadorAtacado= event.target.closest('.tablero-juego').id;
-    if (!verificarPrevioAtaque(casillaAtacada)) alert ("La casilla ya ha sido atacada, ataque otra");
-    else{
+    if (verificarPrevioAtaque(casillaAtacada)) 
+    {
         detenerTemporizador();
         verificarPowerUp(casillaAtacada,jugadorAtacado);
     }
@@ -455,7 +476,7 @@ function eliminarTablas(playerOut){
 let estadoInicialSelector = []; // Variable global para guardar el estado inicial
 
 function crearTableroCreacion(jugadores, tableros, listaJugadores) {
-    puntaje = 100;
+    puntaje = 0;
     let puntajeText = document.getElementById('puntaje');
     puntajeText.textContent = puntaje+' puntos';
     const jugadorActual = listaJugadores.indexOf(localStorage.getItem('nombreJugador')) + 1;
@@ -807,8 +828,6 @@ function verificarPEM()
         empDuration--;
         if (empDuration<=0)
             alert('el efecto del PEM ha desaparecido') ;
-        else
-            alert('el efecto del PEM seguirá por '+empDuration+' turnos') ;
     }
 }
 
@@ -816,4 +835,27 @@ function actualizarCooldowns()
 {
     if (empCooldown>0)
         empCooldown--;
+}
+
+function mandarRespuestaSonar(gamePlayers, jugadorAtacante)
+{
+    let casillaDevuelta=false;
+    let indiceJugador=gamePlayers.indexOf(localStorage.getItem('nombreJugador'))+1;
+    while (!casillaDevuelta)
+    {
+        let indice= randomizador(0,barcos.length-1);
+        let barcoElegido= barcos[indice];
+        for (let i=0; i<barcoElegido.posiciones.length; i++)
+        {
+            let casillaId='p'+indiceJugador+'-'+barcoElegido.posiciones[i];
+            const casillaRevelada= document.getElementById(casillaId);
+            if (!casillaRevelada.querySelector('.hit'))
+            {
+                let casillaReveladaId=casillaRevelada.id;
+                casillaDevuelta=true;
+                ws.send(JSON.stringify({ type: 'sonar-revealed', gameId: localStorage.getItem('partidaActiva'), playerName: localStorage.getItem('nombreJugador'), casillaRevelada:casillaReveladaId, jugadorAtacante: jugadorAtacante}));
+                return;
+            }
+        }
+    }
 }
