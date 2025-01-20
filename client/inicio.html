@@ -180,7 +180,7 @@
                     <li id="escudo">Escudo Defensivo 🛡️</li>
                     <li id="misil-crucero">Misil Crucero 💥</li>
                     <li id="reparacion">Reparación Rápida 🔨</li>
-                    <li id="pem">Ataque PEM 🔌</li>
+                    <li id="pem">Ataque PEM 🔌 - 25 puntos</li>
                 </ul>
                 <button id="compra-potenciador">Comprar</button>
             </section>
@@ -389,7 +389,7 @@
                         let casillaPropia = mensaje.propia;
                         alterarTablero(casillaAtacada,false,mensaje.gamePlayers);
                         alterarTablero(casillaPropia,mensaje.hitPropio,mensaje.gamePlayers);
-                        alert ('El jugador '+mensaje.jugadorAtacante+' ataco la mina del jugador'+mensaje.gamePlayers[mensaje.turno]);
+                        alert ('El jugador '+mensaje.jugadorAtacante+' ataco la mina del jugador '+mensaje.jugadorAtacado);
                         if (!verificarGameOver() )
                         {
                             modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
@@ -405,6 +405,7 @@
                         let casillaPropia = mensaje.propia;
                         alterarTablero(casillaAtacada,false,mensaje.gamePlayers);
                         alterarTablero(casillaPropia,mensaje.hitPropio,mensaje.gamePlayers);
+                        alert ('El jugador '+mensaje.jugadorAtacante+' ataco la mina del jugador '+mensaje.jugadorAtacado);
                     }
                     break;
                     case 'attack': {

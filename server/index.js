@@ -112,7 +112,7 @@ function handleMessage(ws, message) {
             checkearMina(ws,message.gameId,message.atacado,message.propia,message.jugadorAtacado,message.Atacante);
             break;
         case 'mina-attacked':
-            handleMinaMarina(ws,message.gameId,message.casilla,message.casillaAtacada,message.hitPropio,message.jugadorAtacante);
+            handleMinaMarina(ws,message.gameId,message.casilla,message.casillaAtacada,message.hitPropio,message.jugadorAtacante,mensaje.jugadorAtacado);
             break;
         case 'PEM-attack':
             handlePEMAttack(ws,message.gameId,message.jugadorAtacado,message.playerName);
@@ -459,21 +459,21 @@ function checkearMina(ws,gameId,casillaAtacada,casillaPropia, jugadorAtacado,jug
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
         if (player.name===jugadorAtacante)
-        sendMessage(player.ws, { type: 'attack-mina', gameId, casilla: casillaPropia, casillaAtacada:casillaAtacada, gamePlayers:gamePlayers, turno: game.turn, jugadorAtacante:jugadorAtacante });
+        sendMessage(player.ws, { type: 'attack-mina', gameId, casilla: casillaPropia, casillaAtacada:casillaAtacada, gamePlayers:gamePlayers, turno: game.turn, jugadorAtacante:jugadorAtacante, jugadorAtacado:jugadorAtacado });
     });
 }
-function handleMinaMarina (ws,gameId,casillaPropia,casillaAtacada, hitPropio, jugadorAtacante)
+function handleMinaMarina (ws,gameId,casillaPropia,casillaAtacada, hitPropio, jugadorAtacante, jugadorAtacado)
 {
     const game=games[gameId];
     const torneo=torneos[gameId];
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) =>
-        sendMessage(player.ws, { type: 'mina-marina', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante}),
+        sendMessage(player.ws, { type: 'mina-marina', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante, jugadorAtacado:jugadorAtacado}),
     );
     if (torneo)
     {
         torneo.players.forEach((player) =>
-            sendMessage(player.ws, { type: 'mina-marina-espectador', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante}),
+            sendMessage(player.ws, { type: 'mina-marina-espectador', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante, jugadorAtacado: jugadorAtacado}),
         );
     }
 }
