@@ -338,6 +338,7 @@
                         cargarNuevaSeccion('container-juego', 'container-lobby', localStorage.getItem('cantidadJugadores'), mensaje.gamePlayers);
                         modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                         recopilarEnemigos();
+                        jugadoresJuego = mensaje.gamePlayers;
                         asignarClicks(mensaje.gamePlayers, mensaje.turno);
                     }
                         break;
@@ -475,7 +476,7 @@
                         }
                         break;
                     case 'sonar-active':
-                            mandarRespuestaSonar(mensaje.gamePlayers,  mensaje.name);
+                            mandarRespuestaSonar(mensaje.gamePlayers, mensaje.name);
                         break;
                     default: {
                         alert('Ha ocurrido un error en el servidor.');

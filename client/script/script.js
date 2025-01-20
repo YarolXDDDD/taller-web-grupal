@@ -13,6 +13,7 @@ let cantidadBarcos = { // Cantidad de barcos permitidos por tipo
     destructor: 1
 };
 
+let jugadoresJuego;
 let powerUpActivo = null;
 let puntaje = 0;
 let tuTurno = false;
@@ -254,8 +255,21 @@ function comprarPowerUp (seleccionado)
             break;
             case 'Sonar 🔊 - 15 puntos':
             {
-                let submarino = document.querySelectorAll('.barco-submarino.hit');
-                if (puntaje >= 15 && submarino.length < 3 && submarino != null)
+                let hundido = true;
+                let indiceJugador= jugadoresJuego.indexOf(localStorage.getItem('nombreJugador'))+1;
+                barcos.forEach(barco =>
+                {
+                    if (barco.tipo === "submarino")
+                    {
+                        barco.posiciones.forEach(id => 
+                        {
+                            let casillaId='p'+indiceJugador+'-'+id;
+                            let casilla = document.getElementById(casillaId);
+                            if (!casilla.querySelector('.hit'))hundido = false;
+                        });
+                    }
+                });
+                if (puntaje >= 15 && !hundido)
                 {
                     puntaje -= 15;
                     powerUpActivo = "sonar";
