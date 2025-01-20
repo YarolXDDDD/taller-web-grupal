@@ -112,7 +112,7 @@ function handleMessage(ws, message) {
             checkearMina(ws,message.gameId,message.atacado,message.propia,message.jugadorAtacado,message.Atacante);
             break;
         case 'mina-attacked':
-            handleMinaMarina(ws,message.gameId,message.casilla,message.casillaAtacada,message.hitPropio,message.jugadorAtacante,mensaje.jugadorAtacado);
+            handleMinaMarina(ws,message.gameId,message.casilla,message.casillaAtacada,message.hitPropio,message.jugadorAtacante,message.jugadorAtacado);
             break;
         case 'PEM-attack':
             handlePEMAttack(ws,message.gameId,message.jugadorAtacado,message.playerName);
