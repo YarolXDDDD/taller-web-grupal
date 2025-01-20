@@ -108,6 +108,12 @@ function handleMessage(ws, message) {
         case 'ship-destroyed':
             handleShipDestroyed(ws,message.gameId,message.playerName,message.tipoBarco);
             break;
+        case 'mina-marina':
+            checkearMina(ws,message.gameId,message.atacado,message.propia,message.jugadorAtacado,message.Atacante);
+            break;
+        case 'mina-attacked':
+            handleMinaMarina(ws,message.gameId,message.casilla,message.casillaAtacada,message.hitPropio,message.jugadorAtacante);
+            break;
         default:
             // Si el tipo de mensaje no es reconocido, se envía un mensaje de error al jugador.
             sendMessage(ws, { type: "error" , message: 'Mensaje desconocido'});
@@ -440,6 +446,31 @@ function handleShipDestroyed(ws,gameId,playerName,tipoBarco)
     {
         torneo.players.forEach((player) =>
             sendMessage(player.ws, { type: 'ship-destroyed', gameId, name:playerName, gamePlayers: gamePlayers, tipoBarco:tipoBarco}),
+        );
+    }
+}
+function checkearMina(ws,gameId,casillaAtacada,casillaPropia, jugadorAtacado,jugadorAtacante)
+{
+    const game=games[gameId];
+    const torneo=torneos[gameId];
+    const gamePlayers = game.players.map(player => player.name);
+    game.players.forEach((player) => {
+        if (player.name===jugadorAtacante)
+        sendMessage(player.ws, { type: 'attack-mina', gameId, casilla: casillaPropia, casillaAtacada:casillaAtacada, gamePlayers:gamePlayers, turno: game.turn, jugadorAtacante:jugadorAtacante });
+    });
+}
+function handleMinaMarina (ws,gameId,casillaPropia,casillaAtacada, hitPropio, jugadorAtacante)
+{
+    const game=games[gameId];
+    const torneo=torneos[gameId];
+    const gamePlayers = game.players.map(player => player.name);
+    game.players.forEach((player) =>
+        sendMessage(player.ws, { type: 'mina-marina', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante}),
+    );
+    if (torneo)
+    {
+        torneo.players.forEach((player) =>
+            sendMessage(player.ws, { type: 'mina-marina-espectador', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante}),
         );
     }
 }
