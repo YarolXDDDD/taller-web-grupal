@@ -114,6 +114,9 @@ function handleMessage(ws, message) {
         case 'mina-attacked':
             handleMinaMarina(ws,message.gameId,message.casilla,message.casillaAtacada,message.hitPropio,message.jugadorAtacante);
             break;
+        case 'PEM-attack':
+            handlePEMAttack(ws,message.gameId,message.jugadorAtacado,message.playerName);
+            break;
         default:
             // Si el tipo de mensaje no es reconocido, se envía un mensaje de error al jugador.
             sendMessage(ws, { type: "error" , message: 'Mensaje desconocido'});
@@ -473,6 +476,16 @@ function handleMinaMarina (ws,gameId,casillaPropia,casillaAtacada, hitPropio, ju
             sendMessage(player.ws, { type: 'mina-marina-espectador', gameId, atacado: casillaAtacada, propia:casillaPropia, turno: game.turn, hitPropio:hitPropio, gamePlayers:gamePlayers, jugadorAtacante:jugadorAtacante}),
         );
     }
+}
+
+function handlePEMAttack(ws,gameId,jugadorAtacado,playerName)
+{
+    const game=games[gameId];
+    const gamePlayers = game.players.map(player => player.name);
+    game.players.forEach((player) => {
+        if (player.name===jugadorAtacado)
+        sendMessage(player.ws, { type: 'PEM-attacked', gameId, name:playerName});
+    });
 }
 /**
  * Maneja la desconexión de un jugador.

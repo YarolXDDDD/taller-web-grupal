@@ -14,9 +14,10 @@ let cantidadBarcos = { // Cantidad de barcos permitidos por tipo
 };
 
 let powerUpActivo = null;
-let puntaje = 0;
+let puntaje = 10;
 let tuTurno = false;
-
+let empCooldown=0;
+let empDuration=0;
 
 function crearTablero (tableros)
 {
@@ -204,10 +205,47 @@ function verificarPowerUp (casillaAtacada,jugadorAtacado) //Es para quien compre
             ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
         }
         break;
+        case 'pem':{
+            powerUpActivo = null;
+            if (empCooldown<=0)
+            {
+                empCooldown=10;
+                ws.send(JSON.stringify({ type: 'PEM-attack', gameId: localStorage.getItem('partidaActiva'), jugadorAtacado:jugadorAtacado, playerName: localStorage.getItem('nombreJugador')}));
+            }
+            else
+            alert('el emp está en cooldown, tiempo restante: '+empCooldown+' turnos');
+        }
+        break;
         default:{
             ws.send(JSON.stringify({ type: 'attack', gameId: localStorage.getItem('partidaActiva'), casilla: casillaAtacada, jugadorAtacado:jugadorAtacado}));
         }
     }
+}
+
+function comprarPowerUp (seleccionado)
+{
+    if (tuTurno)
+    {
+        switch (seleccionado.textContent)
+        {
+            case 'Mina Marina 💣 - 10 puntos':
+            {
+                if (puntaje >= 10)
+                {
+                    powerUpActivo = "mina-marina";
+                    alert ('Haz comprado el powerUp Mina Marina 💣, aparecerá una bomba en tu tablero una vez hayas terminado tu turno');
+                }
+                else
+                    alert ('No tienes puntos suficientes para comprar este potenciador');
+            }
+            break;
+            default:{
+                powerUpActivo = null;
+            }
+        }
+    }
+    else
+        alert('No puedes comprar potenciadores si no es tu turno');
 }
 
 function prepararPowerUp (powerUp) //Es para quien compra el powerUp
@@ -218,8 +256,17 @@ function prepararPowerUp (powerUp) //Es para quien compra el powerUp
         {
             let tablaJugador = document.getElementById(localStorage.getItem('nombreJugador'));
             let tabla = tablaJugador.querySelector('.tablero');
-            let casillasDisponibles = tabla.querySelectorAll('.table-cell:not(.hit, .miss, .barco)');
-            let casilla = casillasDisponibles[randomizador(0, casillasDisponibles.length-1)];
+            let casillasDisponibles = tabla.querySelectorAll('.table-cell');
+            let disponibles = [];
+            casillasDisponibles.forEach(casilla =>
+            {
+                if (!casilla.classList.contains('hit') && !casilla.classList.contains('miss') && !casilla.classList.contains('barco') && !casilla.querySelector('.barco'))
+                {   
+                    let disponible = casilla.id;
+                    disponibles.push(disponible);
+                }
+            });
+            let casilla = document.getElementById(disponibles[randomizador(0, disponibles.length-1)]);
             let mina = document.createElement('div');
             mina.classList.add('mina-marina');
             mina.innerHTML = '💣';
@@ -234,12 +281,22 @@ function activarPowerUp (powerUp, mensaje) //Es para quien compra el powerUp o s
     switch (powerUp) {
         case 'mina-marina':
         {
-            let mina = mensaje.casilla.querySelector('.mina-marina');
-            mensaje.casilla.removeChild(mina);
-            let tablaJugador = document.getElementById(mensaje.gamePlayers[mensaje.turno-1]);
+            let casillaMina = document.getElementById(mensaje.casilla);
+            let mina = casillaMina.querySelector('.mina-marina');
+            casillaMina.removeChild(mina);
+            let tablaJugador = mensaje.turno == 0 ? document.getElementById(mensaje.gamePlayers[mensaje.gamePlayers.length-1]):document.getElementById(mensaje.gamePlayers[mensaje.turno-1]);
             let tabla = tablaJugador.querySelector('.tablero');
-            let casillasDisponibles = tabla.querySelectorAll('.table-cell:not(.hit,.miss)');
-            let casilla = casillasDisponibles[randomizador(0, casillasDisponibles.length-1)];
+            let casillasDisponibles = tabla.querySelectorAll('.table-cell');
+            let disponibles = [];
+            casillasDisponibles.forEach(casilla =>
+            {
+                if (!casilla.classList.contains('hit') && !casilla.classList.contains('miss'))
+                {   
+                    let disponible = casilla.id;
+                    disponibles.push(disponible);
+                }
+            });
+            let casilla = document.getElementById(disponibles[randomizador(0, disponibles.length-1)]);
             casilla = casilla.id;
             let atacante = mensaje.turno == 0 ? mensaje.gamePlayers[mensaje.gamePlayers.length-1] : mensaje.gamePlayers[mensaje.turno-1];
             ws.send(JSON.stringify({ type: 'mina-marina', gameId: localStorage.getItem('partidaActiva'), atacado: mensaje.casilla, propia: casilla, jugadorAtacado: localStorage.getItem('nombreJugador'), Atacante: atacante}));
@@ -391,7 +448,9 @@ function eliminarTablas(playerOut){
 let estadoInicialSelector = []; // Variable global para guardar el estado inicial
 
 function crearTableroCreacion(jugadores, tableros, listaJugadores) {
-    puntaje = 0;
+    puntaje = 10;
+    let puntajeText = document.getElementById('puntaje');
+    puntajeText.textContent = puntaje;
     const jugadorActual = listaJugadores.indexOf(localStorage.getItem('nombreJugador')) + 1;
 
     const selectorBarco = document.getElementById('selector-barco');
@@ -662,7 +721,7 @@ let temporizador;
 
 // Función para iniciar el temporizador
 function iniciarTemporizador(callback) {
-    let tiempoRestante = 30;
+    let tiempoRestante = 60;
     modificarAnuncio("Te quedan " + tiempoRestante + " segundos");
 
     temporizador = setInterval(() => {
@@ -703,14 +762,18 @@ function verificarHundimiento(casillaId,gamePlayers){
     }
 }
 
-
-function alterarTablero(casilla, resultadoAtaque, gamePlayers) {
+function alterarTablero(casilla, resultadoAtaque, gamePlayers, turno) {
     let casillaAtacada = document.getElementById(casilla);
+    let jugador
+    if (turno != null) jugador = turno == 0 ? gamePlayers[gamePlayers.length-1] : gamePlayers[turno-1];
     if (casillaAtacada) {
         if (resultadoAtaque) {
-            puntaje += 5;
-            let puntajeText = document.getElementById('puntaje');
-            puntajeText.textContent = puntaje;
+            if (turno != null && jugador === localStorage.getItem('nombreJugador'))
+            {
+                puntaje += 5;
+                let puntajeText = document.getElementById('puntaje');
+                puntajeText.textContent = puntaje;
+            }
             let golpe = document.createElement("div");
             golpe.classList.add("hit");
             let barcoAtacado = casillaAtacada.querySelector(".barco");
@@ -723,4 +786,27 @@ function alterarTablero(casilla, resultadoAtaque, gamePlayers) {
             casillaAtacada.innerHTML = "❌";
         }
     }
+}
+
+function verificarPEM()
+{
+    let boton= document.getElementById('compra-potenciador');
+    if (empDuration<=0)
+    {
+        boton.disabled=false;
+    }
+    else
+    {
+        empDuration--;
+        if (empDuration<=0)
+        alert('el efecto del PEM ha desaparecido') ;
+        else
+        alert('el efecto del PEM seguirá por '+empDuration+' turnos') ;
+    }
+}
+
+function actualizarCoolDowns()
+{
+    if (empCooldown>0)
+        empCooldown--;
 }

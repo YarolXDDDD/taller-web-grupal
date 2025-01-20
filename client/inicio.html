@@ -387,9 +387,9 @@
                     {
                         let casillaAtacada = mensaje.atacado;
                         let casillaPropia = mensaje.propia;
-                        alterarTablero(casillaAtacada,false);
-                        alterarTablero(casillaPropia,mensaje.hitPropio);
-                        alert ('El jugador '+mensaje.jugadorAtacante+' ataco la mina del jugador'+mensaje.gamePlayers[game.turn]);
+                        alterarTablero(casillaAtacada,false,mensaje.gamePlayers);
+                        alterarTablero(casillaPropia,mensaje.hitPropio,mensaje.gamePlayers);
+                        alert ('El jugador '+mensaje.jugadorAtacante+' ataco la mina del jugador'+mensaje.gamePlayers[mensaje.turno]);
                         if (!verificarGameOver() )
                         {
                             modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
@@ -403,8 +403,8 @@
                     {
                         let casillaAtacada = mensaje.atacado;
                         let casillaPropia = mensaje.propia;
-                        alterarTablero(casillaAtacada,false);
-                        alterarTablero(casillaPropia,mensaje.hitPropio);
+                        alterarTablero(casillaAtacada,false,mensaje.gamePlayers);
+                        alterarTablero(casillaPropia,mensaje.hitPropio,mensaje.gamePlayers);
                     }
                     break;
                     case 'attack': {
@@ -418,11 +418,13 @@
                     case 'attack-done':
                         {
                             console.log(mensaje);
-                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque,mensaje.gamePlayers);
+                            if (verificarPrevioAtaque(mensaje.casilla)) alterarTablero(mensaje.casilla,mensaje.resultadoAtaque,mensaje.gamePlayers,mensaje.turno);
                             if (!verificarGameOver())
                             {
                                 modificarAnuncio("Ahora es el turno de "+mensaje.gamePlayers[mensaje.turno]);
                                 asignarClicks(mensaje.gamePlayers, mensaje.turno);
+                                verificarPEM();
+                                actualizarCooldowns();
                             }
                             else
                                 location.reload();
@@ -459,6 +461,14 @@
                     case 'ship-destroyed':
                         {
                             alert('le destruyeron el barco '+mensaje.tipoBarco+' al jugador '+mensaje.name);
+                        }
+                        break;
+                    case 'PEM-attacked':
+                        {
+                            empDuration+=3;
+                            let boton=document.getElementById('compra-potenciador');
+                            boton.disabled=true;
+                            alert('has sufrido un ataque PEM del jugador: '+mensaje.name+' no podras usar power-Ups durante '+empDuration+' turnos');
                         }
                         break;
                     default: {
@@ -502,30 +512,7 @@
 
         document.getElementById("compra-potenciador").addEventListener('click', function () 
         {
-            if (seleccionado)
-            {
-                if (tuTurno)
-                {
-                    switch (seleccionado.textContent)
-                    {
-                        case 'Mina Marina 💣 - 10 puntos':
-                        {
-                            if (puntaje >= 10)
-                            {
-                                powerUpActivo = "mina-marina";
-                                alert ('Haz comprado el powerUp Mina Marina 💣, aparecerá una bomba en tu tablero una vez hayas terminado tu turno');
-                            }
-                            else
-                                alert ('No tienes puntos suficientes para comprar este potenciador');
-                        }
-                        default:{
-                            powerUpActivo = null;
-                        }
-                    }
-                }
-                else
-                    alert('No puedes comprar potenciadores si no es tu turno');
-            }
+            if (seleccionado) comprarPowerUp (seleccionado);
         });
 
         document.getElementById('listo').addEventListener('click', () => {
