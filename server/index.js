@@ -499,7 +499,7 @@ function handleSonar(ws, gameId,jugadorAtacado,playerName)
     const gamePlayers = game.players.map(player => player.name);
     game.players.forEach((player) => {
         if (player.name===jugadorAtacado)
-        sendMessage(player.ws, { type: 'sonar-active', gameId, name:playerName});
+        sendMessage(player.ws, { type: 'sonar-active', gameId, name:playerName, gamePlayers:gamePlayers});
     });
 }
 
