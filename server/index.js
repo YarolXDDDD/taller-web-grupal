@@ -118,10 +118,10 @@ function handleMessage(ws, message) {
             handlePEMAttack(ws,message.gameId,message.jugadorAtacado,message.playerName);
             break;
         case 'sonar':
-            handleSonar(ws,gameId,message.jugadorAtacado,message.playerName);
+            handleSonar(ws,message.gameId,message.jugadorAtacado,message.playerName);
             break;
         case 'sonar-revealed':
-            handleSonarRevealed(ws,gameId,message.playerName,message.casillaRevelada,message.jugadorAtacante);
+            handleSonarRevealed(ws,message.gameId,message.playerName,message.casillaRevelada,message.jugadorAtacante);
             break;
         default:
             // Si el tipo de mensaje no es reconocido, se envía un mensaje de error al jugador.
